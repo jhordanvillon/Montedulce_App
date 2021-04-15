@@ -31,7 +31,7 @@ class LoginPage extends StatelessWidget {
                     Text('Compra pasteles verdes', style: TextStyle(color:Color(0XFF480E0A),fontSize:20),),
                     Container(
                       height: size.height*0.20,
-                      width: size.width*0.60,
+                      width: size.width*0.50,
                       child: Image(
                         image: AssetImage('assets/tasting.png'),
                         fit:BoxFit.fill
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
                         decoration: InputDecoration(hintText:'Email' ) ,
                       )
                     ),
-                     SizedBox(
+                    SizedBox(
                       height:size.height*0.02),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal:size.width*0.1),
@@ -54,9 +54,23 @@ class LoginPage extends StatelessWidget {
                         obscureText: true,
                       )
                     ),
-                     SizedBox(
-                      height:size.height*0.04),
-                    Container(  // button
+                    SizedBox(
+                      height:size.height*0.08),
+                    Container( //button
+                      child: Center(
+                        // ignore: deprecated_member_use
+                        child: RaisedButton(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 55.0, vertical: 3.0),
+                            child: Text('Login', style: TextStyle(color:Color(0xFF480E0A), fontSize:20, fontWeight: FontWeight.bold)),
+                            ),
+                            color: Color(0xffFEFDE1),onPressed: (){
+                              Navigator.pushNamed(context, 'register');
+                            },
+                        ),
+                      ),
+                    ),  
+                    /* Container(  // button
                       height: size.height*0.055,
                       width: size.width*0.55,
                       decoration: BoxDecoration(
@@ -66,7 +80,7 @@ class LoginPage extends StatelessWidget {
                       child: Center(
                         child: Text('Login', style: TextStyle(color:Color(0xFF480E0A), fontSize:20, fontWeight: FontWeight.bold)),
                       ),
-                    )
+                    ) */
                   ],
                 ),
               ),
