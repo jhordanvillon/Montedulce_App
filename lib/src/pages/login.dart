@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -65,11 +66,22 @@ class LoginPage extends StatelessWidget {
                             child: Text('Login', style: TextStyle(color:Color(0xFF480E0A), fontSize:20, fontWeight: FontWeight.bold)),
                             ),
                             color: Color(0xffFEFDE1),onPressed: (){
-                              Navigator.pushNamed(context, 'register');
+                              Navigator.pushNamed(context, 'home');
                             },
                         ),
                       ),
-                    ),  
+                    ),
+                      SizedBox(height: size.height * 0.05),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text('No tienes cuenta?',
+                        style:
+                            TextStyle(color: Color(0xFF480E0A), fontSize: 18)
+                    ),
+                    CupertinoButton(
+                        child: Text('Regístrate',style: TextStyle(color: Color(0XFFE1232D), fontSize: 18)),
+                        onPressed: () {Navigator.pushNamed(context,'register');} 
+                    )
+                  ])  
                     /* Container(  // button
                       height: size.height*0.055,
                       width: size.width*0.55,
