@@ -46,12 +46,15 @@ class _CardProductState extends State<CardProduct> {
 					Text( widget.product.title ,style: TextStyle(color: colorMarron, fontWeight: FontWeight.bold,fontSize: 13.0),),
 					Container(
 						padding: EdgeInsets.symmetric(),
-						child: Image(
-							alignment: Alignment.center,
-							image: AssetImage(widget.product.image),
-							height: 100,
-							width: 110,
-							fit: BoxFit.fill
+						child: GestureDetector(
+              onTap: widget.press,
+						  child: Image(
+						  	alignment: Alignment.center,
+						  	image: AssetImage(widget.product.image),
+						  	height: 100,
+						  	width: 110,
+						  	fit: BoxFit.fill
+						  ),
 						),
 					),
 					Row(

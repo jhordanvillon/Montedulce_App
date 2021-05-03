@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/models/Product.dart';
+import 'package:montedulce_integrador/src/pages/user/detail.dart';
 import 'package:montedulce_integrador/src/widgets/card_widget.dart';
 import 'package:montedulce_integrador/src/widgets/menu_widget.dart';
 
@@ -54,6 +55,9 @@ class _HomePageState extends State<HomePage> {
                   ), 
                   itemBuilder: (context, index) => CardProduct(
                     product: products[index],
+                    press: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailProduct(
+                      product: products[index],
+                    ))),
                   ),
                 )
               )

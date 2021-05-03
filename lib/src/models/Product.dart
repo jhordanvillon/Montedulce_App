@@ -56,6 +56,13 @@ List<Product> products = [
     description: desription,
     image: 'assets/torta6.png',
   ),
+  Product(
+    id: 7,
+    title: 'Torta Nutella',
+    price: 55,
+    description: desription,
+    image: 'assets/torta6.png',
+  ),
   
 ];
 
