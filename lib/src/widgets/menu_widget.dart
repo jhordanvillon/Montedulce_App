@@ -62,7 +62,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       _opciones(titulo: 'Inicio', icon: Icons.home),
                       _opciones(titulo: 'Perfil', icon: Icons.person),
                       _opciones(titulo: 'Carrito', icon: Icons.shopping_cart),
-                      _opciones(titulo: 'Salir', icon: Icons.logout),
+                      _opciones(titulo: 'Salir', icon: Icons.logout,press: () => Navigator.pushNamed(context, 'checkout')),
                     ],
                   ),
                   width: double.infinity,
@@ -80,13 +80,11 @@ class _MenuWidgetState extends State<MenuWidget> {
     );
   }
 
-  Widget _opciones({String titulo, IconData icon }){
+  Widget _opciones({String titulo, IconData icon, Function press}){
     return ListTile(
       title: Text(titulo,style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold,color: colorMarron),),
       leading: Icon(icon,color: colorMarron,size: 30.0,),
-      onTap: (){
-        print(titulo);
-      },
+      onTap: press,
     );
   }
 

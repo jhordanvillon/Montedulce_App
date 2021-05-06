@@ -48,7 +48,7 @@ class _DetailProductState extends State<DetailProduct> {
                     topRight: Radius.circular(30)
                   )
                 ),
-                child: descripcion(size),
+                child: descripcion(),
               ),
             ),
           ],
@@ -84,7 +84,7 @@ class _DetailProductState extends State<DetailProduct> {
     );
   }
 
-  Widget descripcion(Size size) {
+  Widget descripcion() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -97,14 +97,14 @@ class _DetailProductState extends State<DetailProduct> {
             textAlign: TextAlign.start,
         ),
         SizedBox(height: 15.0,),
-        cantidad(size),
+        cantidad(),
         SizedBox(height: 15.0,),
         comprarAhora()
       ],
     );
   }
 
-  Widget cantidad(Size size) {
+  Widget cantidad() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -147,6 +147,5 @@ class _DetailProductState extends State<DetailProduct> {
     );
     
   }
-
   
 }
