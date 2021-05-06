@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         'home':     (BuildContext context) =>HomePage(),
         'cart':     (BuildContext context) =>CartPage(),
       },
-      initialRoute: 'cart',
+      initialRoute: 'login',
     );
   }
 }
