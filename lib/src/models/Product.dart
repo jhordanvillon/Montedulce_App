@@ -63,7 +63,20 @@ List<Product> products = [
     description: desription,
     image: 'assets/torta6.png',
   ),
-  
+    Product(
+    id: 8,
+    title: 'Torta de Jamón',
+    price: 50,
+    description: desription,
+    image: 'assets/torta6.png',
+  ),
+   Product(
+    id: 8,
+    title: 'Pie de manzana',
+    price: 70,
+    description: desription,
+    image: 'assets/torta6.png',
+  ),
 ];
 
 String desription = "Excepteur id quis excepteur exercitation irure enim Lorem excepteur consequat aliqua.Incididunt aute ex ad nisi enim deserunt aliquip qui id labore veniam aute.";

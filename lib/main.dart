@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/pages/login.dart';
 import 'package:montedulce_integrador/src/pages/register.dart';
+
 import 'package:montedulce_integrador/src/pages/user/checkout.dart';
+import 'package:montedulce_integrador/src/pages/user/cart.dart';
 import 'package:montedulce_integrador/src/pages/user/home.dart';
+import 'package:montedulce_integrador/src/pages/user/perfil.dart';
  
 void main() => runApp(MyApp());
  
@@ -20,10 +23,12 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes:{
-        'login':    (BuildContext context) =>LoginPage(),
-        'register': (BuildContext context) =>RegisterPage(),
-        'home':     (BuildContext context) =>HomePage(),
-        'checkout': (BuildContext context) =>CheckoutPage(),
+        'login'   : (BuildContext context) => LoginPage(),
+        'register': (BuildContext context) => RegisterPage(),
+        'home'    : (BuildContext context) => HomePage(),
+        'checkout': (BuildContext context) => CheckoutPage(),
+        'cart'    : (BuildContext context) => CartPage(),
+        'perfil'  : (BuildContext context) => PerfilPage(),
       },
       initialRoute: 'login',
     );
