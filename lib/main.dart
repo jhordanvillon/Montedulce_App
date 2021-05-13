@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/pages/admin/admin_home.dart';
 import 'package:montedulce_integrador/src/pages/admin/estadisticas.dart';
+import 'package:montedulce_integrador/src/pages/admin/productos.dart';
 import 'package:montedulce_integrador/src/pages/login.dart';
 import 'package:montedulce_integrador/src/pages/register.dart';
 
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         'cart'    : (BuildContext context) => CartPage(),
         'perfil'  : (BuildContext context) => PerfilPage(),
         'adminHome': (BuildContext context) => AdminHome(),
-        'estadisticas':(BuildContext context) => EstadisticasPage()
+        'estadisticas':(BuildContext context) => EstadisticasPage(),
+        'productos':(BuildContext context)=>ProductoPage()
       },
       initialRoute: 'adminHome',
     );
