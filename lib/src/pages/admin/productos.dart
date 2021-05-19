@@ -13,7 +13,7 @@ class _ProductoPageState extends State<ProductoPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){
-
+          Navigator.pushNamed(context, 'crearProducto');
         },
       ),
       backgroundColor: Color(0xFFFEFDE1),
