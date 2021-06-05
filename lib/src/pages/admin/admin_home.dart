@@ -9,7 +9,7 @@ class AdminHome extends StatelessWidget {
       backgroundColor: Color(0xFFFEFDE1),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 18),
           child: Column(
             children: [
               TituloWidget(titulo: 'Inicio',),
@@ -18,22 +18,22 @@ class AdminHome extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _cardOption(size: size,imgUrl: 'assets/productos.png',nombre: 'Productos',context: context,ruta: 'productos'),
-                    _cardOption(size: size,imgUrl: 'assets/categorias.png',nombre: 'Categorias',context: context,ruta: '')
+                    _cardOption(size: size,imgUrl: 'assets/categorias.png',nombre: 'Categorias',context: context,ruta: 'categorias')
                   ],
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 25),
+                margin: EdgeInsets.only(top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _cardOption(size: size,imgUrl: 'assets/usuarios.png',nombre: 'Usuarios',context: context,ruta: ''),
+                    _cardOption(size: size,imgUrl: 'assets/usuarios.png',nombre: 'Usuarios',context: context,ruta: 'usuarios'),
                     _cardOption(size: size,imgUrl: 'assets/pedidos.png',nombre: 'Pedidos',context: context,ruta: '')
                   ],
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 25),
+                margin: EdgeInsets.only(top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -58,6 +58,13 @@ class AdminHome extends StatelessWidget {
         width: size.width * 0.43,
         height: 150,
         decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3.0,
+                blurRadius: 3.0
+              )
+            ],
             borderRadius: BorderRadius.circular(20), color: Colors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

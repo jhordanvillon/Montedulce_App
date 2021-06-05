@@ -13,32 +13,35 @@ class _EstadisticasPageState extends State<EstadisticasPage> {
     return Scaffold(
       backgroundColor: Color(0xFFFEFDE1),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              TituloWidget(titulo: 'Estadisticas'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _cardPedidos(size:size,numero: 250,tipo: 'Pedidos del día',imgLink: 'assets/pedidos_dia.png'),
-                  _cardPedidos(size: size,numero: 1800,tipo:'Pedidos totales',imgLink: 'assets/pedidos_totales.png')
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 15),
-                child: Row(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.only(bottom: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                TituloWidget(titulo: 'Estadisticas'),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _cardProducto(size: size),
-                    _cardReporteDia(size:size)
+                    _cardPedidos(size:size,numero: 250,tipo: 'Pedidos del día',imgLink: 'assets/pedidos_dia.png'),
+                    _cardPedidos(size: size,numero: 1800,tipo:'Pedidos totales',imgLink: 'assets/pedidos_totales.png')
                   ],
                 ),
-              ),
-              Container(
-                child: _cardReporteTotal(size:size),
-              )
-            ],
+                Container(
+                  margin: EdgeInsets.only(top: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _cardProducto(size: size),
+                      _cardReporteDia(size:size)
+                    ],
+                  ),
+                ),
+                Container(
+                  child: _cardReporteTotal(size:size),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -53,6 +56,13 @@ class _EstadisticasPageState extends State<EstadisticasPage> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
+        boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3.0,
+                blurRadius: 3.0
+              )
+            ],
         borderRadius: BorderRadius.circular(20)
       ),
       child: Column(
@@ -76,6 +86,13 @@ class _EstadisticasPageState extends State<EstadisticasPage> {
       width: size.width*0.42,
       decoration: BoxDecoration(
         color: Colors.white,
+        boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3.0,
+                blurRadius: 3.0
+              )
+            ],
         borderRadius: BorderRadius.circular(20)
       ),
       child: Column(
@@ -110,6 +127,13 @@ class _EstadisticasPageState extends State<EstadisticasPage> {
       width: size.width*0.42,
       decoration: BoxDecoration(
         color: Colors.white,
+        boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3.0,
+                blurRadius: 3.0
+              )
+            ],
         borderRadius: BorderRadius.circular(20)
       ),
       child: Column(
@@ -148,6 +172,13 @@ class _EstadisticasPageState extends State<EstadisticasPage> {
       width: size.width*0.42,
       decoration: BoxDecoration(
         color: Colors.white,
+        boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3.0,
+                blurRadius: 3.0
+              )
+        ],
         borderRadius: BorderRadius.circular(20)
       ),
       child: Column(

@@ -53,9 +53,16 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _cardProducto(){
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: 20, left: 3,right: 3,top: 4),
       decoration: BoxDecoration(
         color: Colors.white,
+        boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3.0,
+                blurRadius: 3.0
+              )
+            ],
         borderRadius: BorderRadius.circular(20)
       ),
       padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),

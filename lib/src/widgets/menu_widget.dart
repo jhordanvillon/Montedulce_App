@@ -31,11 +31,13 @@ class _MenuWidgetState extends State<MenuWidget> {
                         height: 80,
                         decoration:BoxDecoration(
                           borderRadius: BorderRadius.circular(80),
-                          image:DecorationImage(image:AssetImage('assets/anderson.PNG')), 
+                          image:DecorationImage(image:AssetImage('assets/castillo.jpg'),fit: BoxFit.cover),
+                          
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text('Anderson Surco',style:TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold))
+                    
+                      Text('Peter Castle',style:TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold))
                     ],
                   ),
                   height: size.height * 0.25,                  
@@ -59,10 +61,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                       ),
                       Divider(color: colorMarron,),
                       SizedBox(height: 15.0,),
-                      _opciones(titulo: 'Inicio', icon: Icons.home),
+                      _opciones(titulo: 'Inicio', icon: Icons.home, press: () => Navigator.pushNamed(context, 'home')),
                       _opciones(titulo: 'Perfil', icon: Icons.person,press: () => Navigator.pushNamed(context, 'perfil')),
-                      _opciones(titulo: 'Carrito', icon: Icons.shopping_cart),
-                      _opciones(titulo: 'Salir', icon: Icons.logout,press: () => Navigator.pushNamed(context, 'checkout')),
+                      _opciones(titulo: 'Carrito', icon: Icons.shopping_cart, press: () => Navigator.pushNamed(context, 'cart')),
+                      _opciones(titulo: 'Salir', icon: Icons.logout,press: () => Navigator.pushNamed(context, 'login')),
                     ],
                   ),
                   width: double.infinity,

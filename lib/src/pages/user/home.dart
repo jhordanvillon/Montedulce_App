@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
 			padding: EdgeInsets.only(right: 10.0),
 			child: IconButton(
 					icon: Icon(Icons.shopping_cart, size: 35.0,),
-					onPressed: (){}, 
+					onPressed: () => Navigator.pushNamed(context, 'cart'), 
 			),
 		);
 	}
