@@ -13,7 +13,7 @@ class _CategoriasPageState extends State<CategoriasPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){
-
+          Navigator.pushNamed(context, 'crearCategoria');
         },
       ),
       backgroundColor: Color(0xFFFEFDE1),

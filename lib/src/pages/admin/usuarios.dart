@@ -13,7 +13,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){
-
+          Navigator.pushNamed(context, 'crearUsuario');
         },
       ),
       backgroundColor: Color(0xFFFEFDE1),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/pages/admin/admin_home.dart';
+import 'package:montedulce_integrador/src/pages/admin/crear_categoria.dart';
 
 import 'package:montedulce_integrador/src/pages/admin/crear_producto.dart';
 
 import 'package:montedulce_integrador/src/pages/admin/categorias.dart';
+import 'package:montedulce_integrador/src/pages/admin/crear_usuario.dart';
 
 import 'package:montedulce_integrador/src/pages/admin/estadisticas.dart';
 import 'package:montedulce_integrador/src/pages/admin/productos.dart';
@@ -42,8 +44,11 @@ class MyApp extends StatelessWidget {
         'estadisticas':(BuildContext context) => EstadisticasPage(),
         'productos':(BuildContext context)=>ProductoPage(),
         'crearProducto': (BuildContext context) => CrearProductoPage(),
+        'crearUsuario': (BuildContext context) => CrearUsuarioPage(),
+        'crearCategoria': (BuildContext context) => CrearCategoriaPage(),
         'usuarios':(BuildContext context)=>UsuariosPage(),
         'categorias':(BuildContext context)=>CategoriasPage(),
+
       },
       initialRoute: 'login',
     );
