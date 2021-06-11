@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/pages/admin/widget/campo_widget.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
 import 'package:montedulce_integrador/src/widgets/input_widget.dart';
 
@@ -15,19 +14,19 @@ class _CrearProductoPageState extends State<CrearProductoPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFFFEFDE1),
-      body: GestureDetector(
-        onTap: (){
-          FocusScope.of(context).unfocus();
-        },
-        child: SafeArea(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: GestureDetector(
+          onTap: (){
+            FocusScope.of(context).unfocus();
+          },
+          child: SafeArea(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
                   TituloWidget(titulo: 'Crear Producto',),
                   Container(
-                    height: size.height*0.8,
+                    padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 20.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)
@@ -53,21 +52,15 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
       child: Column(
           children: [
-            CampoWidget(
-              nombre: 'Nombre',
-            ),
-            CampoWidget(
-              nombre: 'Descripcion',
-            ),
-            CampoWidget(
-              nombre: 'Precio',
-            ),
-            CampoWidget(
-              nombre: 'Stock',
-            ),
+            Input(hinText: 'Nombre',icon: Icons.cake_outlined),
+            SizedBox(height: 15.0),
+            Input(hinText: 'Descripción',icon: Icons.description_outlined),
+            SizedBox(height: 15.0),
+            Input(hinText: 'Precio',icon: Icons.request_quote_outlined),
+            SizedBox(height: 15.0),
+            Input(hinText: 'Stock',icon: Icons.inventory),
             Container(
               width: 100,
               height: 100,
@@ -90,35 +83,13 @@ class __FormState extends State<_Form> {
                 ],
               ),
             ),
-            Expanded(child: Container()),
+            SizedBox(height: 10.0),
             Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 150,
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                      color: Color(0xffFEFDE1),
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Center(
-                      child: Text('Eliminar',style: TextStyle(color: Color(0xff622420),fontSize: 18,fontWeight: FontWeight.bold),),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: Color(0xffE8DB65),
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Center(
-                      child: Text('Guardar',style: TextStyle(color: Color(0xff622420),fontSize: 18,fontWeight: FontWeight.bold),),
-                    ),
-                  )
-                ],
+              width: double.infinity,
+              child: CupertinoButton(
+                color: Color(0xffE8DB65),
+                child: Text( 'Guardar', style: TextStyle(color: Color(0XFF480E0A),fontSize: 18.0,fontWeight: FontWeight.bold),),
+                onPressed: (){},
               ),
             )
           ],

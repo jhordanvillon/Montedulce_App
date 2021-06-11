@@ -20,29 +20,55 @@ class _CategoriasPageState extends State<CategoriasPage> {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              TituloWidget(titulo: 'Categorias'),
-              Container(
-                height: size.height*0.8,
-                child: ListView(
-                  children: [
-                    _cardProducto('Chiffon','assets/chifon.png', 'C0001','...'),
-                    _cardProducto('Zanahoria','assets/zanahoria.png', 'C0002','...'),
-                    _cardProducto('Devil food','assets/devil.png', 'C0003','...'),
-                    _cardProducto('Natilla','assets/natilla.png', 'C0004','...'),
-                    
-                  ],
-                ),
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TituloWidget(titulo: 'Categorias'),
+                _busqueda(),
+                SizedBox(height: 15.0,),
+                Container(
+                  height: size.height*0.75,
+                  child: ListView(
+                    children: [
+                      _cardCategoria('Chiffon','assets/chifon.png', 'C0001','...'),
+                      _cardCategoria('Zanahoria','assets/zanahoria.png', 'C0002','...'),
+                      _cardCategoria('Devil food','assets/devil.png', 'C0003','...'),
+                      _cardCategoria('Natilla','assets/natilla.png', 'C0004','...'),
+                      
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _cardProducto(String nombre, String ruta, String rol, String descripcion){
+  Widget _busqueda(){
+			return Container(
+				child: TextField(
+					textAlign: TextAlign.center,
+					textCapitalization: TextCapitalization.sentences,
+					cursorColor: Color(0XFF480E0A),
+					decoration: InputDecoration(
+						contentPadding: EdgeInsets.all(10.0),
+						fillColor: Colors.white,
+						filled: true,
+						border: OutlineInputBorder(
+							borderRadius: BorderRadius.circular(10.0),
+							borderSide: BorderSide.none,
+						),
+						hintText: 'Buscar',
+						hintStyle: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+					)
+				),
+			);
+	}
+
+
+  Widget _cardCategoria(String nombre, String ruta, String rol, String descripcion){
     return Container(
       margin: EdgeInsets.only(bottom: 20, left: 3,right: 3,top: 4),
       decoration: BoxDecoration(

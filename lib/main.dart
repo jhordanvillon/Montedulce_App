@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/pages/admin/admin_home.dart';
-<<<<<<< Updated upstream
+
 import 'package:montedulce_integrador/src/pages/admin/crear_producto.dart';
-=======
+
 import 'package:montedulce_integrador/src/pages/admin/categorias.dart';
->>>>>>> Stashed changes
+
 import 'package:montedulce_integrador/src/pages/admin/estadisticas.dart';
 import 'package:montedulce_integrador/src/pages/admin/productos.dart';
 import 'package:montedulce_integrador/src/pages/admin/usuarios.dart';
@@ -41,12 +41,9 @@ class MyApp extends StatelessWidget {
         'adminHome': (BuildContext context) => AdminHome(),
         'estadisticas':(BuildContext context) => EstadisticasPage(),
         'productos':(BuildContext context)=>ProductoPage(),
-<<<<<<< Updated upstream
-        'crearProducto': (BuildContext context) => CrearProductoPage()
-=======
+        'crearProducto': (BuildContext context) => CrearProductoPage(),
         'usuarios':(BuildContext context)=>UsuariosPage(),
         'categorias':(BuildContext context)=>CategoriasPage(),
->>>>>>> Stashed changes
       },
       initialRoute: 'login',
     );

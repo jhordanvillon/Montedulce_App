@@ -20,32 +20,57 @@ class _UsuariosPageState extends State<UsuariosPage> {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              TituloWidget(titulo: 'Usuarios'),
-              Container(
-                height: size.height*0.8,
-                child: ListView(
-                  children: [
-                    _cardProducto('Alfonso vader','assets/vader.jpg', 'Administrador'),
-                    _cardProducto('Maria castillo','assets/usuaria.jpg', 'Cliente'),
-                    _cardProducto('Peter castle','assets/castillo.jpg', 'Cliente'),
-                    _cardProducto('Calamardo guapo','assets/calamardo.jpg', 'Cliente'),
-                    _cardProducto('Maria castillo','assets/usuaria.jpg', 'Cliente'),
-                    _cardProducto('Peter castle','assets/castillo.jpg', 'Cliente'),
-                    _cardProducto('Alfonso sanchez','assets/calamardo.jpg', 'Cliente'),
-                    
-                  ],
-                ),
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TituloWidget(titulo: 'Usuarios'),
+                _busqueda(),
+                SizedBox(height: 15.0,),
+                Container(
+                  height: size.height*0.75,
+                  child: ListView(
+                    children: [
+                      _cardUsuario('Alfonso vader','assets/vader.jpg', 'Administrador'),
+                      _cardUsuario('Maria castillo','assets/usuaria.jpg', 'Cliente'),
+                      _cardUsuario('Peter castle','assets/castillo.jpg', 'Cliente'),
+                      _cardUsuario('Calamardo guapo','assets/calamardo.jpg', 'Cliente'),
+                      _cardUsuario('Maria castillo','assets/usuaria.jpg', 'Cliente'),
+                      _cardUsuario('Peter castle','assets/castillo.jpg', 'Cliente'),
+                      _cardUsuario('Alfonso sanchez','assets/calamardo.jpg', 'Cliente'),
+                      
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _cardProducto(String nombre, String ruta, String rol){
+  Widget _busqueda(){
+			return Container(
+				child: TextField(
+					textAlign: TextAlign.center,
+					textCapitalization: TextCapitalization.sentences,
+					cursorColor: Color(0XFF480E0A),
+					decoration: InputDecoration(
+						contentPadding: EdgeInsets.all(10.0),
+						fillColor: Colors.white,
+						filled: true,
+						border: OutlineInputBorder(
+							borderRadius: BorderRadius.circular(10.0),
+							borderSide: BorderSide.none,
+						),
+						hintText: 'Buscar',
+						hintStyle: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+					)
+				),
+			);
+	}
+
+  Widget _cardUsuario(String nombre, String ruta, String rol){
     return Container(
       margin: EdgeInsets.only(bottom: 20, left: 3,right: 3,top: 4),
       decoration: BoxDecoration(

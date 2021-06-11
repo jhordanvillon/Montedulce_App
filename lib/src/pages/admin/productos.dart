@@ -20,36 +20,53 @@ class _ProductoPageState extends State<ProductoPage> {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              TituloWidget(titulo: 'Productos'),
-              Container(
-                height: size.height*0.8,
-                child: ListView(
-                  children: [
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                    _cardProducto(),
-                  ],
-                ),
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TituloWidget(titulo: 'Productos'),
+                _busqueda(),
+                SizedBox(height: 15.0,),
+                Container(
+                  height: size.height * 0.75,
+                  child: ListView(
+                    children: [
+                      _cardProducto(),
+                      _cardProducto(),
+                      _cardProducto(),
+                      _cardProducto(),
+                      _cardProducto(),
+                      _cardProducto(),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  Widget _busqueda(){
+			return Container(
+				child: TextField(
+					textAlign: TextAlign.center,
+					textCapitalization: TextCapitalization.sentences,
+					cursorColor: Color(0XFF480E0A),
+					decoration: InputDecoration(
+						contentPadding: EdgeInsets.all(10.0),
+						fillColor: Colors.white,
+						filled: true,
+						border: OutlineInputBorder(
+							borderRadius: BorderRadius.circular(10.0),
+							borderSide: BorderSide.none,
+						),
+						hintText: 'Buscar',
+						hintStyle: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+					)
+				),
+			);
+	}
 
   Widget _cardProducto(){
     return Container(
