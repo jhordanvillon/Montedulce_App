@@ -23,9 +23,17 @@ class _PerfilPageState extends State<PerfilPage> {
        backgroundColor: Color(0xFFFEFDE1),
        body: Stack(
            children: <Widget>[
-            _fondoPerfil(size),
-            _perfilImagen(size),
-            _datos(size),
+              _fondoPerfil(size),
+              _perfilImagen(size),
+              _datos(size), 
+              Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  leading: BackButton(color: Color(0XFF480E0A),),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+               ),
+             ),
            ],
          ),
     );
