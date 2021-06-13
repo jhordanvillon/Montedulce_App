@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:montedulce_integrador/src/api/authentication_api.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key key}) : super(key: key);
+  
+
+  final nombreControl = TextEditingController();
+  final apellidoControl = TextEditingController();
+  final emailControl = TextEditingController();
+  final passControl = TextEditingController();
+  final usuarioControl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +50,27 @@ class RegisterPage extends StatelessWidget {
                             padding:
                                 EdgeInsets.symmetric(horizontal: size.width * 0.1),
                             child: TextField(
+                              controller: nombreControl,
                               style:
                                   TextStyle(color: Color(0XFF480E0A), fontSize: 20),
-                              decoration: InputDecoration(hintText: 'Nombre'),
+                              decoration: InputDecoration(hintText: 'Nombres'),
                             )),
                         SizedBox(height: size.height * 0.02),
                         Container(
                             padding:
                                 EdgeInsets.symmetric(horizontal: size.width * 0.1),
                             child: TextField(
+                              controller: apellidoControl,
+                              style:
+                                  TextStyle(color: Color(0XFF480E0A), fontSize: 20),
+                              decoration: InputDecoration(hintText: 'Apellidos'),
+                            )),
+                        SizedBox(height: size.height * 0.02),
+                        Container(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: size.width * 0.1),
+                            child: TextField(
+                              controller: emailControl,
                               style:
                                   TextStyle(color: Color(0XFF480E0A), fontSize: 20),
                               decoration: InputDecoration(hintText: 'Email'),
@@ -61,6 +80,7 @@ class RegisterPage extends StatelessWidget {
                             padding:
                                 EdgeInsets.symmetric(horizontal: size.width * 0.1),
                             child: TextField(
+                              controller: passControl,
                               style:
                                   TextStyle(color: Color(0XFF480E0A), fontSize: 20),
                               decoration: InputDecoration(hintText: 'Contraseña'),
@@ -71,11 +91,12 @@ class RegisterPage extends StatelessWidget {
                             padding:
                                 EdgeInsets.symmetric(horizontal: size.width * 0.1),
                             child: TextField(
+                              controller: usuarioControl,
                               style:
                                   TextStyle(color: Color(0XFF480E0A), fontSize: 20),
                               decoration:
-                                  InputDecoration(hintText: 'Repetir contraseña'),
-                              obscureText: true,
+                                  InputDecoration(hintText: 'Nombre de usuario'),
+                              obscureText: false
                             )),
                         SizedBox(height: size.height * 0.04),
                         Container(
@@ -93,8 +114,13 @@ class RegisterPage extends StatelessWidget {
                                         fontWeight: FontWeight.bold)),
                               ),
                               color: Color(0xffFEFDE1),
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'login');
+                              onPressed: () async {
+                                final user = await AuthenticationApi.instance.registrar(context: context, nombre: nombreControl.text, apellidos: apellidoControl.text, password: passControl.text, email: emailControl.text, username: usuarioControl.text, adminNameRole: "user");
+                                if(user != null){
+                                  
+                                     Navigator.pushNamed(context, "home");
+                                  
+                                }
                               },
                             ),
                           ),

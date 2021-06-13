@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:montedulce_integrador/src/api/authentication_api.dart';
 
 class LoginPage extends StatelessWidget {
 
-  String email, contrasena;
+  final emailCtrl = TextEditingController();
+  final passCtrl = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class LoginPage extends StatelessWidget {
                             child: TextField(
                               style: TextStyle(color:Color(0XFF480E0A),fontSize:20),
                               decoration: InputDecoration(hintText:'Usuario' ) ,
-                              onChanged: (texto) => email = texto,
+                              controller: emailCtrl,
                             )
                           ),
                           
@@ -62,7 +65,7 @@ class LoginPage extends StatelessWidget {
                               style: TextStyle(color:Color(0XFF480E0A),fontSize:20),
                               decoration: InputDecoration(hintText:'Contraseña'),
                               obscureText: true,
-                              onChanged: (texto)=> contrasena = texto,
+                              controller: passCtrl
                             )
                           ),
                           SizedBox(
@@ -76,7 +79,18 @@ class LoginPage extends StatelessWidget {
                                   child: Text('Login', style: TextStyle(color:Color(0xFF480E0A), fontSize:20, fontWeight: FontWeight.bold)),
                                   ),
                                   color: Color(0xffFEFDE1),
-                                  onPressed: () => email == 'admin' ? Navigator.pushNamed(context, 'adminHome') : Navigator.pushNamed(context, 'home'),
+                                  onPressed: () async{
+      
+                                    final user = await AuthenticationApi.instance.login(context: context, email: emailCtrl.text, password: passCtrl.text);
+                                    print(user);
+                                    if(user != null){
+                                      if(user.adminNameRole == "admin"){
+                                        Navigator.pushNamed(context, "adminHome");
+                                      }else{
+                                        Navigator.pushNamed(context, "home");
+                                      }    
+                                    }   
+                                  },
                               ),
                             ),
                           ),
@@ -91,17 +105,6 @@ class LoginPage extends StatelessWidget {
                               onPressed: () => Navigator.pushNamed(context, 'register')
                           )
                         ])  
-                          /* Container(  // button
-                            height: size.height*0.055,
-                            width: size.width*0.55,
-                            decoration: BoxDecoration(
-                              color: Color(0xffFEFDE1),
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Center(
-                              child: Text('Login', style: TextStyle(color:Color(0xFF480E0A), fontSize:20, fontWeight: FontWeight.bold)),
-                            ),
-                          ) */
                         ],
                       ),
                     ),

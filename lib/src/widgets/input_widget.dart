@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
-
+  TextEditingController controller;
   String hinText, initialValue;
   IconData icon;
   bool fill,enabled;
   Color fillColor;
   Input({
     Key key,
+    this.controller,
     this.hinText,
     this.fill,
     this.fillColor,
@@ -27,7 +28,7 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return TextField(
       enabled: widget.enabled,
-      controller: TextEditingController(text: widget.initialValue),
+      controller: widget.controller,
       decoration: InputDecoration(
         filled: widget.fill,
         fillColor: widget.fillColor,
