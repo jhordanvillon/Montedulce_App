@@ -1,71 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
-class UsuariosPage extends StatefulWidget {
+
+class CardWidget extends StatefulWidget {
+  const CardWidget({
+    Key key,
+    @required this.titulo,
+    @required this.subtitulo,
+    @required this.subtitulo2,
+    @required this.ruta,
+    @required this.selected,
+  }) : super(key: key);
+
+  final String titulo;
+  final String subtitulo;
+  final String subtitulo2;
+  final String ruta;
+  final Function selected;
   @override
-  _UsuariosPageState createState() => _UsuariosPageState();
+  _CardWidgetState createState() => _CardWidgetState();
 }
 
-class _UsuariosPageState extends State<UsuariosPage> {
+class _CardWidgetState extends State<CardWidget> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: (){
-          Navigator.pushNamed(context, 'crearUsuario');
-        },
-      ),
-      backgroundColor: Color(0xFFFEFDE1),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TituloWidget(titulo: 'Usuarios'),
-                _busqueda(),
-                SizedBox(height: 15.0,),
-                Container(
-                  height: size.height*0.75,
-                  child: ListView(
-                    children: [
-                      _cardUsuario('Alfonso vader','assets/vader.jpg', 'Administrador'),
-                      _cardUsuario('Maria castillo','assets/usuaria.jpg', 'Cliente'),
-                      _cardUsuario('Peter castle','assets/castillo.jpg', 'Cliente'),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _busqueda(){
-			return Container(
-				child: TextField(
-					textAlign: TextAlign.center,
-					textCapitalization: TextCapitalization.sentences,
-					cursorColor: Color(0XFF480E0A),
-					decoration: InputDecoration(
-						contentPadding: EdgeInsets.all(10.0),
-						fillColor: Colors.white,
-						filled: true,
-						border: OutlineInputBorder(
-							borderRadius: BorderRadius.circular(10.0),
-							borderSide: BorderSide.none,
-						),
-						hintText: 'Buscar',
-						hintStyle: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-					)
-				),
-			);
-	}
-
-  Widget _cardUsuario(String nombre, String ruta, String rol){
     return Container(
       margin: EdgeInsets.only(bottom: 20, left: 3,right: 3,top: 4),
       decoration: BoxDecoration(
@@ -87,7 +43,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
             width: 80,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(ruta),
+                  image: (widget.ruta != null) ? AssetImage(widget.ruta) : AssetImage('assets/contenido-no-disponible.jpg'),
                   fit: BoxFit.cover
               ),
               borderRadius: BorderRadius.circular(15.0),
@@ -105,7 +61,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(nombre,style: TextStyle(color: Color(0xff622420),fontSize: 18),),
+                    Text((widget.titulo.length <= 18) ? widget.titulo : widget.titulo.substring(0,18) +"..." ,style: TextStyle(color: Color(0xff622420),fontSize: 18),),
                   ],
                 ),
                 SizedBox(height: 5,),
@@ -115,8 +71,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Rol: ',style: TextStyle(fontSize: 16,)),
-                        Text(rol,style: TextStyle(fontSize: 14,color: Color(0xff622420)))
+                        Text((widget.subtitulo.length <= 21) ? widget.subtitulo : widget.subtitulo.substring(0,21) +"...",style: TextStyle(fontSize: 16,)),
                       ],
                     ),
                   ],
@@ -124,8 +79,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
                 SizedBox(height: 5,),
                 Row(
                   children: [
-                    Text('Dirección: ',style: TextStyle(fontSize: 16,)),
-                    Text('Los Olivos',style: TextStyle(fontSize: 14,color: Color(0xff622420)))
+                    Text(widget.subtitulo2,style: TextStyle(fontSize: 16,)),
                   ],
                 ),
               ],
@@ -138,14 +92,20 @@ class _UsuariosPageState extends State<UsuariosPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 PopupMenuButton(
+                  onSelected: widget.selected,
                   itemBuilder: (context) =>[
-                    PopupMenuItem(child: Row(
+                    PopupMenuItem(
+                      value: 0,
+                      child: Row(
                       children: [
                         Icon(Icons.edit_outlined),
                         Text('Editar')
                       ],
-                    )),
-                    PopupMenuItem(child: Row(
+                    )
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: Row(
                       children: [
                         Icon(Icons.delete_outlined),
                         Text('Eliminar')

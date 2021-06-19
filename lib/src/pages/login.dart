@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                                     final user = await AuthenticationApi.instance.login(context: context, email: emailCtrl.text, password: passCtrl.text);
                                     print(user);
                                     if(user != null){
-                                      if(user.adminNameRole == "admin"){
+                                      if(user.adminNameRole == "Administrador"){
                                         Navigator.pushNamed(context, "adminHome");
                                       }else{
                                         Navigator.pushNamed(context, "home");

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:montedulce_integrador/src/api/categoria_api.dart';
 import 'package:montedulce_integrador/src/api/productos_api.dart';
+import 'package:montedulce_integrador/src/pages/admin/widget/dropdown_widget.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
 import 'package:montedulce_integrador/src/widgets/input_widget.dart';
 
@@ -54,13 +56,10 @@ class __FormState extends State<_Form> {
    final nombreControl = TextEditingController();
    final descripcionControl = TextEditingController();
    final precioControl = TextEditingController();
-
+   String valor;
 
   @override
   Widget build(BuildContext context) {
-
-    
-
     return Container(
       child: Column(
           children: [
@@ -70,9 +69,25 @@ class __FormState extends State<_Form> {
             SizedBox(height: 15.0),
             Input(hinText: 'Precio',icon: Icons.request_quote_outlined,controller: precioControl),
             SizedBox(height: 15.0),
-            Input(hinText: 'Categoria',icon: Icons.request_quote_outlined,controller: precioControl),
-            SizedBox(height: 15.0),
-            //Input(hinText: 'Stock',icon: Icons.inventory),
+            FutureBuilder(
+              future:  CategoriaApi.instance.ListarCategoria(),
+              builder: (BuildContext context,AsyncSnapshot snapshot){
+                if(snapshot.hasData){
+                  return DropdownWidget(
+                    valor: valor, 
+                    funcion: (seleccion) {
+                      setState(() {
+                        valor = seleccion; 
+                        print("ID ->" + seleccion + " valor->" + valor);                
+                      });
+                    },
+                    categorias: snapshot.data,
+                  );
+                }else{
+                  return Center(child: CircularProgressIndicator(strokeWidth: 4,));
+                }
+              }
+            ),
             Container(
               width: 100,
               height: 100,
@@ -102,7 +117,7 @@ class __FormState extends State<_Form> {
                 color: Color(0xffE8DB65),
                 child: Text( 'Guardar', style: TextStyle(color: Color(0XFF480E0A),fontSize: 18.0,fontWeight: FontWeight.bold),),
                 onPressed: ()async{
-                  final isok = await ProductoApi.instance.crearProducto(nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text));
+                  final isok = await ProductoApi.instance.crearProducto(nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text),categoriaId: valor,stock: 1);
                   print(isok);
                 },
               ),

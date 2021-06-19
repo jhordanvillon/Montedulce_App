@@ -6,6 +6,8 @@ import 'package:montedulce_integrador/src/pages/admin/crear_producto.dart';
 
 import 'package:montedulce_integrador/src/pages/admin/categorias.dart';
 import 'package:montedulce_integrador/src/pages/admin/crear_usuario.dart';
+import 'package:montedulce_integrador/src/pages/admin/editar_categoria.dart';
+import 'package:montedulce_integrador/src/pages/admin/editar_producto.dart';
 
 import 'package:montedulce_integrador/src/pages/admin/estadisticas.dart';
 import 'package:montedulce_integrador/src/pages/admin/productos.dart';
@@ -44,8 +46,10 @@ class MyApp extends StatelessWidget {
         'estadisticas':(BuildContext context) => EstadisticasPage(),
         'productos':(BuildContext context)=>ProductoPage(),
         'crearProducto': (BuildContext context) => CrearProductoPage(),
+        'editarProducto': (BuildContext context) => EditarProductoPage(),
         'crearUsuario': (BuildContext context) => CrearUsuarioPage(),
         'crearCategoria': (BuildContext context) => CrearCategoriaPage(),
+        'editarCategoria': (BuildContext context) => EditarCategoriaPage(),
         'usuarios':(BuildContext context)=>UsuariosPage(),
         'categorias':(BuildContext context)=>CategoriasPage(),
 

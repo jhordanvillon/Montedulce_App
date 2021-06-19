@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:montedulce_integrador/src/models/Usuario.dart';
 class MenuWidget extends StatefulWidget {
+
+  UsuarioModel usuario;
+
+  MenuWidget({Key key, this.usuario}) : super(key: key);
+
   @override
   _MenuWidgetState createState() => _MenuWidgetState();
 }
@@ -31,7 +37,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         height: 80,
                         decoration:BoxDecoration(
                           borderRadius: BorderRadius.circular(80),
-                          image:DecorationImage(image:AssetImage('assets/castillo.jpg'),fit: BoxFit.cover),
+                          image:DecorationImage(image:AssetImage('assets/contenido-no-disponible.jpg'),fit: BoxFit.cover),
                           
                         ),
                       ),

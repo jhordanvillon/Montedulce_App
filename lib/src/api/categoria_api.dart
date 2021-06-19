@@ -1,33 +1,29 @@
 import 'package:dio/dio.dart';
-import 'package:montedulce_integrador/src/models/Producto.dart';
+import 'package:montedulce_integrador/src/models/categoria.dart';
 import 'package:montedulce_integrador/src/service/auth.dart';
 
-class ProductoApi{
+class CategoriaApi{
 
-  ProductoApi._internal();
-  static ProductoApi _instance = ProductoApi._internal();
-  static ProductoApi get instance => _instance;
+  CategoriaApi._internal();
+  static CategoriaApi _instance = CategoriaApi._internal();
+  static CategoriaApi get instance => _instance;
 
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'https://montedulce.azurewebsites.net/api/Producto',
+      baseUrl: 'https://montedulce.azurewebsites.net/api/Categoria',
       contentType: Headers.jsonContentType,
       responseType: ResponseType.json,
       validateStatus: (_) => true,
     ),
   );
 
-
-  Future<bool> crearProducto({String nombre,String descripcion,double precio, String categoriaId,int stock}) async{
+  Future<bool> crearCategoria({String nombre,String descripcion}) async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
     try{
       final Response response = await this._dio.post("/",data: {
         "Nombre": nombre,
         "Descripcion": descripcion,
-        "Precio": precio,
-        "CategoriaId": categoriaId,
-        "Stock": stock,
       },options: Options(headers: {"Authorization":tokenReal}));
       print(response.data);
       if(response.statusCode == 200){
@@ -39,16 +35,13 @@ class ProductoApi{
     }
   }
 
-  Future<bool> editarProducto({String nombre,String descripcion,double precio, String categoriaId,int stock,String id}) async{
+  Future<bool> editarCategoria({String nombre,String descripcion,String id}) async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
     try{
       final Response response = await this._dio.put("/$id",data: {
         "Nombre": nombre,
         "Descripcion": descripcion,
-        "Precio": precio,
-        "CategoriaId": categoriaId,
-        "Stock": stock,
       },options: Options(headers: {"Authorization":tokenReal}));
       print(response.data);
       if(response.statusCode == 200){
@@ -60,29 +53,7 @@ class ProductoApi{
     }
   }
 
-  Future buscarProducto({String nombre}) async{
-    final token = await Auth.instance.accessToken;
-    final tokenReal = "Bearer " + token ;
-
-    try{
-      final Response response = await this._dio.get("/$nombre",options: Options(headers: {"Authorization":tokenReal}));
-      print(response.data);
-      
-      if(response.statusCode == 200){
-        final List<dynamic> listaProducto = response.data;
-        return listaProducto.map(
-          (obj) => Producto.fromJson(obj)
-        ).toList();
-      }
-      return false;
-    }catch(e){
-      print(e);
-      return [];
-    }
-
-  }
-
-  Future ListarProducto() async{
+  Future ListarCategoria() async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
 
@@ -92,9 +63,7 @@ class ProductoApi{
       
       if(response.statusCode == 200){
         final List<dynamic> listaProducto = response.data;
-        return listaProducto.map(
-          (obj) => Producto.fromJson(obj)
-        ).toList();
+        return listaProducto.map((obj) => Categoria.fromJson(obj)).toList();
       }
       return false;
     }catch(e){
@@ -102,13 +71,9 @@ class ProductoApi{
       return [];
     }
 
-    
-
   }
 
-  
-
-  Future<bool> eliminarProducto({String id}) async{
+  Future<bool> eliminarCategoria({String id}) async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
 
@@ -126,7 +91,6 @@ class ProductoApi{
     }
 
   }
-
 
 
 }

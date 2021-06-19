@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/api/categoria_api.dart';
+import 'package:montedulce_integrador/src/models/categoria.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
 import 'package:montedulce_integrador/src/widgets/input_widget.dart';
 
-class CrearCategoriaPage extends StatefulWidget {
+class EditarCategoriaPage extends StatefulWidget {
+
+  final Categoria categoria;
+
+  EditarCategoriaPage({Key key, this.categoria}) : super(key: key);
+
   @override
-  _CrearCategoriaPageState createState() => _CrearCategoriaPageState();
+  _EditarCategoriaPageState createState() => _EditarCategoriaPageState();
 }
 
-class _CrearCategoriaPageState extends State<CrearCategoriaPage> {
+class _EditarCategoriaPageState extends State<EditarCategoriaPage> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    
     return Scaffold(
       backgroundColor: Color(0xFFFEFDE1),
       body: SingleChildScrollView(
@@ -25,14 +31,14 @@ class _CrearCategoriaPageState extends State<CrearCategoriaPage> {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
-                  TituloWidget(titulo: 'Crear Categoria',),
+                  TituloWidget(titulo: 'Editar Categoria',),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 20.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)
                     ),
-                    child: _Form()
+                    child: _Form(categoria: widget.categoria,)
                   )
                 ],
               ),
@@ -45,23 +51,35 @@ class _CrearCategoriaPageState extends State<CrearCategoriaPage> {
 }
 
 class _Form extends StatefulWidget {
+
+  final Categoria categoria;
+
+  _Form({Key key, this.categoria}) : super(key: key);
+
   @override
   __FormState createState() => __FormState();
 }
 
 class __FormState extends State<_Form> {
 
+  String id;
+
   final nombreControl = TextEditingController();
   final descripcionControl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    nombreControl.text = widget.categoria.nombre;
+    descripcionControl.text = widget.categoria.descripcion;
+    id = widget.categoria.categoriaId;
+
     return Container(
       child: Column(
           children: [
-            Input(hinText: 'Nombre',icon: Icons.cake_outlined,controller: nombreControl,),
+            Input(hinText: 'Nombre',icon: Icons.cake_outlined, controller: nombreControl),
             SizedBox(height: 15.0),
-            Input(hinText: 'Descripción',icon: Icons.description_outlined,controller: descripcionControl,),
+            Input(hinText: 'Descripción',icon: Icons.description_outlined, controller: descripcionControl),
             SizedBox(height: 15.0),
             Container(
               width: 100,
@@ -92,7 +110,7 @@ class __FormState extends State<_Form> {
                 color: Color(0xffE8DB65),
                 child: Text( 'Guardar', style: TextStyle(color: Color(0XFF480E0A),fontSize: 18.0,fontWeight: FontWeight.bold),),
                 onPressed: ()async{
-                  final isok = await CategoriaApi.instance.crearCategoria(nombre: nombreControl.text, descripcion: descripcionControl.text);
+                  final isok = await CategoriaApi.instance.editarCategoria(nombre: nombreControl.text, descripcion: descripcionControl.text,id: id);
                   print(isok);
                 },
               ),
