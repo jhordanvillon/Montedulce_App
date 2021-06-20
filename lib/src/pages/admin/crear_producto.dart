@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/categoria_api.dart';
 import 'package:montedulce_integrador/src/api/productos_api.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/dropdown_widget.dart';
@@ -119,6 +120,23 @@ class __FormState extends State<_Form> {
                 onPressed: ()async{
                   final isok = await ProductoApi.instance.crearProducto(nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text),categoriaId: valor,stock: 1);
                   print(isok);
+                  if(isok){
+                      Fluttertoast.showToast(
+                        msg: "creado correctamente",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: "Ingrese los campos correctamente",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                  }
                 },
               ),
             )

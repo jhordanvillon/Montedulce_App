@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/authentication_api.dart';
 
 class LoginPage extends StatelessWidget {
@@ -86,6 +87,7 @@ class LoginPage extends StatelessWidget {
                                     if(user != null){
                                       if(user.adminNameRole == "Administrador"){
                                         Navigator.pushNamed(context, "adminHome");
+                                       
                                       }else{
                                         Navigator.pushNamed(context, "home");
                                       }    

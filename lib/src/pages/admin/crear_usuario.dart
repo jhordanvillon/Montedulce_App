@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/authentication_api.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
 import 'package:montedulce_integrador/src/widgets/input_widget.dart';
@@ -84,7 +85,13 @@ class __FormState extends State<_Form> {
                   final user = await AuthenticationApi.instance.registrar(context: context, nombre: nombreControl.text, apellidos: apellidoControl.text, password: contrasenaControl.text, email: emailControl.text, username: usuarioControl.text, adminNameRole: rolControl.text);
                   if(user != null){
                     print("registrado") ;
-                    
+                    Fluttertoast.showToast(
+                        msg: "usuario registrado",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
                   }
 
                 },

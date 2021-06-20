@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/categoria_api.dart';
 import 'package:montedulce_integrador/src/models/categoria.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
@@ -112,6 +113,23 @@ class __FormState extends State<_Form> {
                 onPressed: ()async{
                   final isok = await CategoriaApi.instance.editarCategoria(nombre: nombreControl.text, descripcion: descripcionControl.text,id: id);
                   print(isok);
+                  if(isok){
+                      Fluttertoast.showToast(
+                        msg: "Editado correctamente",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: "Ingrese los campos correctamente",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                  }
                 },
               ),
             )

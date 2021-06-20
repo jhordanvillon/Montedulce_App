@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/categoria_api.dart';
 import 'package:montedulce_integrador/src/api/productos_api.dart';
 import 'package:montedulce_integrador/src/models/Producto.dart';
@@ -102,7 +103,7 @@ class __FormState extends State<_Form> {
                 }
               }
             ),
-            Container(
+            /* Container(
               width: 100,
               height: 100,
               child: Image(
@@ -123,7 +124,7 @@ class __FormState extends State<_Form> {
                   )
                 ],
               ),
-            ),
+            ), */
             SizedBox(height: 10.0),
             Container(
               width: double.infinity,
@@ -133,6 +134,23 @@ class __FormState extends State<_Form> {
                 onPressed: ()async{
                   final isok = await ProductoApi.instance.editarProducto( nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text),categoriaId: valor,stock: 1, id: id);
                   print(isok);
+                  if(isok){
+                      Fluttertoast.showToast(
+                        msg: "Editado correctamente",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: "Ingrese los campos correctamente",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                  }
                 },
               ),
             )

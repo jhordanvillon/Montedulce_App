@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/productos_api.dart';
 import 'package:montedulce_integrador/src/models/Producto.dart';
 import 'package:montedulce_integrador/src/pages/admin/buscar_producto.dart';
@@ -104,6 +105,15 @@ class _ProductoPageState extends State<ProductoPage> {
                         final isok = await ProductoApi.instance.eliminarProducto( id: producto.productoId );
                         print(isok);
                         Navigator.of(context).pop();
+                        if(isok){
+                           Fluttertoast.showToast(
+                        msg: "eliminado",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,   
+                        backgroundColor: Colors.red,  
+                         textColor: Colors.grey  
+                    );
+                        }
                     },
                       child: Text("Si")
                     ),
