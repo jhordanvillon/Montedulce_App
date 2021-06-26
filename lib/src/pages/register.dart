@@ -117,8 +117,7 @@ class RegisterPage extends StatelessWidget {
                               onPressed: () async {
                                 final user = await AuthenticationApi.instance.registrar(context: context, nombre: nombreControl.text, apellidos: apellidoControl.text, password: passControl.text, email: emailControl.text, username: usuarioControl.text, adminNameRole: "user");
                                 if(user != null){
-                                  
-                                     Navigator.pushNamed(context, "home");
+                                  Navigator.pushNamed(context, "home");
                                   
                                 }
                               },

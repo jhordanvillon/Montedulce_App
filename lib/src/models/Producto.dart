@@ -16,6 +16,7 @@ class Producto {
     dynamic imgId;
     double precio;
     String categoriaId;
+    int cantidad = 1;
 
     static Producto fromJson(Map json){
       return Producto(

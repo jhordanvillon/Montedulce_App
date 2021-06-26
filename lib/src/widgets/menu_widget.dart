@@ -38,12 +38,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                         decoration:BoxDecoration(
                           borderRadius: BorderRadius.circular(80),
                           image:DecorationImage(image:AssetImage('assets/contenido-no-disponible.jpg'),fit: BoxFit.cover),
-                          
                         ),
                       ),
                       SizedBox(height: 10),
-                    
-                      Text('Peter Castle',style:TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold))
+                      Text( widget.usuario.nombreCompleto,style:TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold))
                     ],
                   ),
                   height: size.height * 0.25,                  

@@ -125,8 +125,8 @@ class __FormState extends State<_Form> {
                         msg: "creado correctamente",
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.red,  
-                         textColor: Colors.grey  
+                        backgroundColor: Colors.grey,  
+                         textColor: Colors.white
                     );
                   }else{
                     Fluttertoast.showToast(

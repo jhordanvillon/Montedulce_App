@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:montedulce_integrador/src/service/stripe_sevice.dart';
 import 'package:montedulce_integrador/src/widgets/input_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -83,12 +84,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Widget _botonPagar(){
+    
     return Container(
       width: double.infinity,
       child: CupertinoButton(
         color: Color(0xFFE8DB65),
         child: Text('Pagar', style: TextStyle(color: colorMarron,),), 
-        onPressed: (){}
+        onPressed: () async {
+         
+
+        }
       ),
     );
   }

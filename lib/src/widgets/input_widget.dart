@@ -1,6 +1,10 @@
+
+
 import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
+
+  final Function(String) validator;
   TextEditingController controller;
   String hinText, initialValue;
   IconData icon;
@@ -14,6 +18,7 @@ class Input extends StatefulWidget {
     this.fillColor,
     this.initialValue,
     this.enabled,
+    this.validator,
     @required this.icon
 
   }) : super(key: key);
@@ -26,7 +31,8 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: widget.validator,
       enabled: widget.enabled,
       controller: widget.controller,
       decoration: InputDecoration(

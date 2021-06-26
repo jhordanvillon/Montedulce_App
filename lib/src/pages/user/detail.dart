@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/models/Product.dart';
+import 'package:montedulce_integrador/src/models/Producto.dart';
 
 class DetailProduct extends StatefulWidget {
-  final Product product;
+  final Producto producto;
 
-  DetailProduct({Key key, this.product}) : super(key: key);
+  DetailProduct({Key key, this.producto}) : super(key: key);
   
   @override
   _DetailProductState createState() => _DetailProductState();
@@ -63,7 +63,7 @@ class _DetailProductState extends State<DetailProduct> {
         width: size.width * 0.50,
         height: size.height * 0.25,
         child: Image(
-          image: AssetImage(widget.product.image),
+          image: (widget.producto.imgLink != null) ? AssetImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
         ),
       ),
     );
@@ -78,7 +78,7 @@ class _DetailProductState extends State<DetailProduct> {
         children: <Widget>[
           Text('Precio',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0, color: colorMarron),),
           SizedBox(height: 5.0,),
-          Text('\$ ${widget.product.price}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: colorMarron),),
+          Text('\$ ${widget.producto.precio}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: colorMarron),),
         ],
       )
     );
@@ -88,18 +88,24 @@ class _DetailProductState extends State<DetailProduct> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text( widget.product.title ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: colorMarron),),
+        Text( widget.producto.nombre ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: colorMarron),),
         SizedBox(height: 5.0,),
         Text('Peso 1kg',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0, color: colorMarron),),
         SizedBox(height: 5.0,),
-        Text( widget.product.description ,
+        Text( widget.producto.descripcion ,
             style: TextStyle(fontSize: 15.0,color: colorMarron),
             textAlign: TextAlign.start,
         ),
-        SizedBox(height: 15.0,),
-        cantidad(),
-        SizedBox(height: 15.0,),
-        comprarAhora()
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              cantidad(),
+              SizedBox(height: 15.0,),
+              comprarAhora()
+            ],
+          ) 
+        ),
       ],
     );
   }

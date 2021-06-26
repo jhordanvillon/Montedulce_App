@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/models/Product.dart';
+import 'package:montedulce_integrador/src/models/Producto.dart';
 
 class CardProduct extends StatefulWidget {
 
-  final Product product;
+  final Producto producto;
   final Function press;
+  final Widget boton;
   
   CardProduct({
     Key key, 
-    this.product, 
-    this.press
+    this.producto, 
+    this.press,
+    this.boton,
   }) : super(key: key);
 
   @override
@@ -43,14 +45,14 @@ class _CardProductState extends State<CardProduct> {
 			),
 			child: Column(
 				children: <Widget>[
-					Text( widget.product.title ,style: TextStyle(color: colorMarron, fontWeight: FontWeight.bold,fontSize: 13.0),),
+					Text( widget.producto.nombre ,style: TextStyle(color: colorMarron, fontWeight: FontWeight.bold,fontSize: 13.0),),
 					Container(
 						padding: EdgeInsets.symmetric(),
 						child: GestureDetector(
               onTap: widget.press,
 						  child: Image(
 						  	alignment: Alignment.center,
-						  	image: AssetImage(widget.product.image),
+						  	image: (widget.producto.imgLink != null) ? AssetImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
 						  	height: 100,
 						  	width: 110,
 						  	fit: BoxFit.fill
@@ -60,7 +62,7 @@ class _CardProductState extends State<CardProduct> {
 					Row(
 						mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 						children: <Widget>[
-							botonAgregar(),
+							Container( height: 25.0, child: widget.boton,),
 							cantidadProducto(),
 							precio(), 
 						],
@@ -110,22 +112,9 @@ class _CardProductState extends State<CardProduct> {
     );
 	}
 
-  Widget botonAgregar() {
-		return Container(
-			height: 25.0,
-			child: CupertinoButton(
-				color: Color(0xFFE8DB65),
-				borderRadius: BorderRadius.circular(3.0),
-				padding: EdgeInsets.only( right: 5.0,left: 5.0),
-				child: Text('Agregar',style: TextStyle(color: colorMarron, fontSize: 12.0,fontWeight: FontWeight.bold),),
-				onPressed: (){},
-			),
-		);
-	}
-
   Widget precio() {
 		return Container(
-			child: Text('\$${widget.product.price}',style: TextStyle(color: colorMarron),),
+			child: Text('\$${widget.producto.precio}',style: TextStyle(color: colorMarron),),
 		);
 	}
 

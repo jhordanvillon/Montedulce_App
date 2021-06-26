@@ -1,29 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:montedulce_integrador/src/api/boleta_api.dart';
+import 'package:montedulce_integrador/src/api/pedido_api.dart';
+import 'package:montedulce_integrador/src/models/ItemBoleta.dart';
+import 'package:montedulce_integrador/src/models/Producto.dart';
+import 'package:montedulce_integrador/src/service/stripe_sevice.dart';
+import 'package:montedulce_integrador/src/widgets/carrito_card_widget.dart';
 class CartPage extends StatefulWidget {
   @override
-  _CartPageState createState() => _CartPageState();
+  final List<Producto> cart;
+
+  CartPage({Key key, this.cart}) : super(key: key);
+  _CartPageState createState() => _CartPageState(this.cart);
+
 }
 
-
 class _CartPageState extends State<CartPage> {
-  final stiloLetra=TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold);
-   final stiloTitulto=TextStyle(color:Color(0XFF480E0A),fontSize: 30,);
-   int numero=1;
 
-    void sumar(){
-      setState(() {
-              numero++;
-      });
-    }
+  _CartPageState(this._cart);
+  List<Producto> _cart;
+  List<Item> _items;
 
-    void restar(){
-      if(numero>=1){
-          setState(() {
-            numero--;
-          });
-      }
+  final stiloLetra=TextStyle(color:Color(0XFF480E0A),fontSize: 20,);
+  final stiloTitulto=TextStyle(color:Color(0XFF480E0A),fontSize: 30,);
+  int _cantidad = 1;
+
+  String valorTotal(List<Producto> listaProductos){
+    double total = 0.0;
+    for(int i = 0; i < listaProductos.length; i++){
+      total = total + listaProductos[i].precio * listaProductos[i].cantidad;
     }
+    return total.toStringAsFixed(2);
+  }
+
+  List<Item> listaItems(List<Producto> listaproductos){
+    List<Item> items = [];
+    for(var listaproducto in listaproductos){
+      var item = new Item(productoId: listaproducto.productoId,cantidad: listaproducto.cantidad );
+      items.add(item);
+    }
+    return items;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size=MediaQuery.of(context).size;
@@ -46,22 +64,29 @@ class _CartPageState extends State<CartPage> {
                   child: Column(
                     children: [
                     Container(
-                      height: size.height*0.5,
-                      child: ListView(
-                        padding: EdgeInsets.only(top:15),
-                        children: [
-                          _card(),
-                          _card(),
-                          _card(),
-                          _card(),
-                        ],
-                      ),
+                      height: size.height*0.6,
+                      child: ListView.builder(
+                        itemCount: _cart.length,
+                        itemBuilder: (context,index){
+                          var item = _cart[index];
+                          return CarritoItemCard(
+                            producto: item,
+                            anadir: (){
+                              _anadir(index);
+                              valorTotal(_cart);
+                            },
+                            remover: (){
+                              _remove(index);
+                              valorTotal(_cart);
+                            },
+                          );
+                        }
+                      )
                     ),     
-                        _infoPago()            
-                    ],
-                  ),
-
+                    _infoPago(_cart)            
+                  ],
                 ),
+              ),
             ],
           )
         ),
@@ -69,117 +94,78 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-    Widget _card(){
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal:10,vertical: 12),
-        
-        child: Container(
-                  padding: EdgeInsets.symmetric(horizontal:10,vertical:10),
-                  decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,          
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 3.0,
-                        blurRadius: 5.0
-                      )
-                    ],
-                  ),
-                  child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage('assets/torta1.png')),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Torta Helada',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                              SizedBox(height: 10),
-                  Text('Peso 1 kg',style: TextStyle(color:Color(0XFF480E0A),fontSize: 15,fontWeight: FontWeight.bold),),
-                  Row(
-                    children: [
-                      IconButton(icon: Icon(Icons.add_circle_outline, color: Color(0xff480E0A)), onPressed: (){sumar();},iconSize: 30),
-                      Text('$numero',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Color(0XFF480E0A))),
-                      IconButton(icon: Icon(Icons.remove_circle_outline,color: Color(0xff480E0A)), onPressed: (){restar();},iconSize: 30)
-                    ]
-                  )
-                ],
-                
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    IconButton(icon: Icon(Icons.delete_outline,color: Color(0XFF480E0A),), onPressed: (){}),
-                     Text('S/156.2',style: TextStyle(color:Color(0XFF480E0A),fontSize: 15,fontWeight: FontWeight.bold),),
-                  ],
-                ),
-              ),
-            ],
-          ),
+  Widget _infoPago(List<Producto> _cart){
+    final stripeService = new StripeService();
+    return Container(
+      margin: EdgeInsets.only(top:25),
+      padding: EdgeInsets.symmetric(horizontal:13),
+      
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal:20,vertical:15),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 3.0,
+              blurRadius: 5.0
+            )
+          ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20)
         ),
-      );
-    }
-    Widget _infoPago(){
-      return Container(
-        margin: EdgeInsets.only(top:25),
-        padding: EdgeInsets.symmetric(horizontal:13),
-        
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal:20,vertical:15),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3.0,
-                blurRadius: 5.0
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:[
+                Text('Total',style: stiloLetra),
+                Text('S/${valorTotal(_cart)}',style: stiloLetra),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top:20),
+              child: CupertinoButton(
+                padding: EdgeInsets.only(top: 0.0, bottom: 0.0, right: 80,left: 80),
+                color: Color(0xFFE8DB65),
+                child: Text('Comprar Ahora', style: TextStyle(color: Color(0XFF480E0A),fontWeight: FontWeight.bold),), 
+                onPressed: () async {
+                  final response = await stripeService.payToCart(amount: valorTotal(_cart), currency: 'USD');
+                  if(response.ok){
+                    print(response.id);
+                  }
+                 /*  print(listaItems(_cart));
+                  final boleta = await BoletaApi.instance.crearBoleta(item: listaItems(_cart));
+                  print(boleta);
+                  if(boleta == true){
+                    final pedido = await PedidoApi.instance.crearPedido(item: listaItems(_cart));
+                    print("pedido "+ pedido.toString() );
+                  } */
+                }
               )
-            ],
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20)
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:[
-                  Text('Sub total',style: stiloLetra),
-                  Text('S/400',style: stiloLetra),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:[
-                  Text('Descuento',style: stiloLetra),
-                  Text('S/100',style: stiloLetra),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:[
-                  Text('Total',style: stiloLetra),
-                  Text('S/300',style: stiloLetra),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(top:20),
-                child: CupertinoButton(
-                  padding: EdgeInsets.only(top: 0.0, bottom: 0.0, right: 80,left: 80),
-                  color: Color(0xFFE8DB65),
-                  child: Text('Comprar Ahora', style: TextStyle(color: Color(0XFF480E0A),fontWeight: FontWeight.bold),), 
-                  onPressed: () => Navigator.pushNamed(context, 'checkout')
-                  )
-              )
-            ],
-          ),
+            )
+          ],
         ),
-      );
-    }
+      ),
+    );
+  }
 
+  _anadir(int index) {
+    setState(() {
+      _cart[index].cantidad++;
+    });
+  }
+
+  _remove(int index) {
+    setState(() {
+      if(_cart[index].cantidad > 1){
+        _cart[index].cantidad--;
+      }else{
+        _cart[index].cantidad = 1;
+      }
+    });
+  }
 }
+
+
+
 

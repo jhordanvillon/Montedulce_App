@@ -1,14 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/models/Product.dart';
+import 'package:montedulce_integrador/src/api/productos_api.dart';
+import 'package:montedulce_integrador/src/models/Producto.dart';
+import 'package:montedulce_integrador/src/models/Usuario.dart';
 import 'package:montedulce_integrador/src/pages/user/detail.dart';
 import 'package:montedulce_integrador/src/widgets/card_widget.dart';
 import 'package:montedulce_integrador/src/widgets/menu_widget.dart';
 
+import 'cart.dart';
+
 
 class HomePage extends StatefulWidget {
+
+  UsuarioModel usuario;
+  HomePage({Key key, this.usuario}) : super(key: key);
 	@override
 	_HomePageState createState() => _HomePageState();
+
 }
 
 class _HomePageState extends State<HomePage> {
@@ -17,9 +25,11 @@ class _HomePageState extends State<HomePage> {
 
 	String _opcion = 'Mas reciente';
 	List<String> _opciones = ['Mas reciente','Mayor precio','Menor Precio'];
+  List<Producto> _listaCarro = [];
 
 	@override
 	Widget build(BuildContext context) {
+    
 
 		final size = MediaQuery.of(context).size;
     
@@ -33,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 						_verCarrito(),
 					],
 				),
-			drawer: SafeArea(child: MenuWidget()),
+			drawer: SafeArea(child: MenuWidget(usuario: widget.usuario,)),
 			body: Container(
 				padding: EdgeInsets.symmetric(horizontal: 10.0),
 				child: Theme(
@@ -44,23 +54,16 @@ class _HomePageState extends State<HomePage> {
 						children: [
 							_busqueda(),
 							_ordenarPor(),
-							Expanded(
-                child: GridView.builder(
-                  itemCount: products.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    /* mainAxisSpacing: 20,
-                    crossAxisSpacing: 15, */
-                    childAspectRatio: 0.84, 
-                  ), 
-                  itemBuilder: (context, index) => CardProduct(
-                    product: products[index],
-                    press: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailProduct(
-                      product: products[index],
-                    ))),
-                  ),
-                )
-              )
+							FutureBuilder(
+                future:  ProductoApi.instance.ListarProducto(),
+                builder: (BuildContext context,AsyncSnapshot snapshot){
+                  if(snapshot.hasData){
+                    return _productos(snapshot.data);
+                  }else{
+                    return Center(child: CircularProgressIndicator(strokeWidth: 4,));
+                  }
+                }
+              ),
 						],
 					),			
 				),
@@ -93,11 +96,31 @@ class _HomePageState extends State<HomePage> {
 
 	Widget _verCarrito(){
 		return Container(
-			padding: EdgeInsets.only(right: 10.0),
-			child: IconButton(
-					icon: Icon(Icons.shopping_cart, size: 35.0,),
-					onPressed: () => Navigator.pushNamed(context, 'cart'), 
-			),
+      padding: EdgeInsets.only(right: 10.0),
+      margin: EdgeInsets.only(top: 8.0),
+		  child: GestureDetector(
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          Icon(Icons.shopping_cart,size: 35,),
+          if (_listaCarro.length > 0)
+            Padding(
+              padding: const EdgeInsets.only(left: 2.0),
+              child: CircleAvatar(
+                radius: 8.0,
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                child: Text(_listaCarro.length.toString(),style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),),
+              ),
+            ),
+        ],
+      ),
+      onTap: () {
+        if (_listaCarro.isNotEmpty){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartPage(cart: _listaCarro,),),);
+        }
+      },
+    ),
 		);
 	}
 
@@ -112,6 +135,7 @@ class _HomePageState extends State<HomePage> {
 						value: _opcion,
 						items: getItems(),
 						onChanged: (opt){
+              print(widget.usuario.adminNameRole);
 							setState(() {
 								_opcion = opt;
 							});
@@ -139,6 +163,41 @@ class _HomePageState extends State<HomePage> {
 		return lista;
 	}
 
+  Widget _productos (List<Producto> productos){
+    return Expanded(
+      child: GridView.builder(
+        itemCount: productos.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.84, 
+        ), 
+        itemBuilder: (context, index) {
+          var item = productos[index];
+          return CardProduct(
+            boton: CupertinoButton(
+              color: Color(0xFFE8DB65),
+              borderRadius: BorderRadius.circular(3.0),
+              padding: EdgeInsets.only( right: 5.0,left: 5.0),
+              child: (!_listaCarro.contains(item)) ? Text('Agregar',style: TextStyle(color: colorMarron, fontSize: 12.0,fontWeight: FontWeight.bold),) : Text('Quitar',style: TextStyle(color: colorMarron, fontSize: 12.0,fontWeight: FontWeight.bold),), 
+              onPressed: (){
+                setState(() {
+                  if(!_listaCarro.contains(item)){
+                    _listaCarro.add(item);
+                    print("No lo contiene");    
+                  }else if(_listaCarro.contains(item)){
+                    _listaCarro.remove(item);
+                    print("Lo contiene");
+                  }         
+                });
+              },
+			      ),
+            producto: productos[index],
+            press: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailProduct(producto: productos[index],))),
+          );
+        } 
+      )
+    );
+  }
 }
 
 

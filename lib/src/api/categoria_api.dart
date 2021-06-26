@@ -56,7 +56,6 @@ class CategoriaApi{
   Future ListarCategoria() async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
-
     try{
       final Response response = await this._dio.get("/",options: Options(headers: {"Authorization":tokenReal}));
       //print(response.data);
@@ -70,13 +69,11 @@ class CategoriaApi{
       print(e);
       return [];
     }
-
   }
 
   Future<bool> eliminarCategoria({String id}) async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
-
     try{
       final Response response = await this._dio.delete("/$id",options: Options(headers: {"Authorization":tokenReal}));
       print(response.data);
@@ -91,6 +88,4 @@ class CategoriaApi{
     }
 
   }
-
-
 }
