@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/models/Usuario.dart';
 class MenuWidget extends StatefulWidget {
 
-  UsuarioModel usuario;
+  
 
-  MenuWidget({Key key, this.usuario}) : super(key: key);
 
   @override
   _MenuWidgetState createState() => _MenuWidgetState();
@@ -41,7 +39,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text( widget.usuario.nombreCompleto,style:TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold))
+                      Text( "User",style:TextStyle(color:Color(0XFF480E0A),fontSize: 20,fontWeight: FontWeight.bold))
                     ],
                   ),
                   height: size.height * 0.25,                  
@@ -67,7 +65,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       SizedBox(height: 15.0,),
                       _opciones(titulo: 'Inicio', icon: Icons.home, press: () => Navigator.pushNamed(context, 'home')),
                       _opciones(titulo: 'Perfil', icon: Icons.person,press: () => Navigator.pushNamed(context, 'perfil')),
-                      _opciones(titulo: 'Carrito', icon: Icons.shopping_cart, press: () => Navigator.pushNamed(context, 'cart')),
+                      _opciones(titulo: 'Mis pedidos', icon: Icons.shopping_cart, press: () => Navigator.pushNamed(context, 'misPedidos')),
                       _opciones(titulo: 'Salir', icon: Icons.logout,press: () => Navigator.pushNamed(context, 'login')),
                     ],
                   ),

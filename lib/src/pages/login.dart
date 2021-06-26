@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                                           if(user.adminNameRole == "Administrador"){
                                             Navigator.pushNamed(context, "adminHome");
                                           }else{
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(usuario: user,)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                                           }    
                                         }   
                                       } 

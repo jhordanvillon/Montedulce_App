@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:montedulce_integrador/src/api/boleta_api.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:montedulce_integrador/src/api/pedido_api.dart';
 import 'package:montedulce_integrador/src/models/ItemBoleta.dart';
 import 'package:montedulce_integrador/src/models/Producto.dart';
@@ -31,6 +31,14 @@ class _CartPageState extends State<CartPage> {
       total = total + listaProductos[i].precio * listaProductos[i].cantidad;
     }
     return total.toStringAsFixed(2);
+  }
+
+  double valorTotalNumerico(List<Producto> listaProductos){
+    double total = 0.0;
+    for(int i = 0; i < listaProductos.length; i++){
+      total = total + listaProductos[i].precio * listaProductos[i].cantidad;
+    }
+    return total;
   }
 
   List<Item> listaItems(List<Producto> listaproductos){
@@ -129,17 +137,26 @@ class _CartPageState extends State<CartPage> {
                 color: Color(0xFFE8DB65),
                 child: Text('Comprar Ahora', style: TextStyle(color: Color(0XFF480E0A),fontWeight: FontWeight.bold),), 
                 onPressed: () async {
-                  final response = await stripeService.payToCart(amount: valorTotal(_cart), currency: 'USD');
+                  final valor = valorTotalNumerico(_cart);
+                  final valorReal = valor * 100 ;
+                  //final valorEntero = int.parse(valorReal);
+                  print(valorReal.toString().split("."));
+                  final valorString = valorReal.toString().split(".");
+                  print(valorString[0]);
+
+                  final response = await stripeService.payToCart(amount: valorString[0], currency: 'USD');
                   if(response.ok){
                     print(response.id);
                   }
-                 /*  print(listaItems(_cart));
-                  final boleta = await BoletaApi.instance.crearBoleta(item: listaItems(_cart));
-                  print(boleta);
-                  if(boleta == true){
-                    final pedido = await PedidoApi.instance.crearPedido(item: listaItems(_cart));
-                    print("pedido "+ pedido.toString() );
-                  } */
+                  print(listaItems(_cart).length);
+                  final pedido = await PedidoApi.instance.crearPedido( codigoPago: response.id , tipoPedido: "Pendiente" , item: listaItems(_cart));
+                  print("pedido "+ pedido.toString() );
+                  
+                  if(pedido){
+                    Toast_msg("Producto realizado");
+                    Navigator.pushNamed(context, 'misPedidos');
+                  }
+                  
                 }
               )
             )
@@ -163,6 +180,16 @@ class _CartPageState extends State<CartPage> {
         _cart[index].cantidad = 1;
       }
     });
+  }
+
+  Future<bool> Toast_msg(String msg){
+    return Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,   
+      backgroundColor: Colors.grey,  
+      textColor: Colors.white  
+    );
   }
 }
 

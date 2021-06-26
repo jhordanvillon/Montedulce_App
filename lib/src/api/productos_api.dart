@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:montedulce_integrador/src/models/Producto.dart';
+import 'package:montedulce_integrador/src/models/photo.dart';
 import 'package:montedulce_integrador/src/service/auth.dart';
 
 class ProductoApi{
@@ -18,7 +19,7 @@ class ProductoApi{
   );
 
 
-  Future<bool> crearProducto({String nombre,String descripcion,double precio, String categoriaId,int stock}) async{
+  Future<bool> crearProducto({String nombre,String descripcion,double precio, String categoriaId,int stock, PhotoModel model}) async{
     final token = await Auth.instance.accessToken;
     final tokenReal = "Bearer " + token ;
     try{
@@ -28,6 +29,8 @@ class ProductoApi{
         "Precio": precio,
         "CategoriaId": categoriaId,
         "Stock": stock,
+        "ImgLink": model.secureUrl,
+        "ImgId": model.publicId
       },options: Options(headers: {"Authorization":tokenReal}));
       print(response.data);
       if(response.statusCode == 200){

@@ -10,6 +10,7 @@ import 'package:montedulce_integrador/src/pages/admin/editar_categoria.dart';
 import 'package:montedulce_integrador/src/pages/admin/editar_producto.dart';
 
 import 'package:montedulce_integrador/src/pages/admin/estadisticas.dart';
+import 'package:montedulce_integrador/src/pages/admin/pedidos_admin.dart';
 import 'package:montedulce_integrador/src/pages/admin/productos.dart';
 import 'package:montedulce_integrador/src/pages/admin/usuarios.dart';
 import 'package:montedulce_integrador/src/pages/login.dart';
@@ -18,13 +19,19 @@ import 'package:montedulce_integrador/src/pages/register.dart';
 import 'package:montedulce_integrador/src/pages/user/checkout.dart';
 import 'package:montedulce_integrador/src/pages/user/cart.dart';
 import 'package:montedulce_integrador/src/pages/user/home.dart';
+import 'package:montedulce_integrador/src/pages/user/mis_pedidos.dart';
 import 'package:montedulce_integrador/src/pages/user/perfil.dart';
+import 'package:montedulce_integrador/src/service/stripe_sevice.dart';
  
 void main() => runApp(MyApp());
  
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    
+    new StripeService()..init();
+
     return MaterialApp(
       title: 'Material App',
       theme: ThemeData(
@@ -52,7 +59,8 @@ class MyApp extends StatelessWidget {
         'editarCategoria': (BuildContext context) => EditarCategoriaPage(),
         'usuarios':(BuildContext context)=>UsuariosPage(),
         'categorias':(BuildContext context)=>CategoriasPage(),
-
+        'misPedidos': (BuildContext context) => MisPedidosPage(),
+        'adminPedidos' : (BuildContext context) => AdminPedidosPage(),
       },
       initialRoute: 'login',
     );

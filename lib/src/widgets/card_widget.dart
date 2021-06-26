@@ -52,7 +52,7 @@ class _CardProductState extends State<CardProduct> {
               onTap: widget.press,
 						  child: Image(
 						  	alignment: Alignment.center,
-						  	image: (widget.producto.imgLink != null) ? AssetImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
+						  	image: (widget.producto.imgLink != null) ? NetworkImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
 						  	height: 100,
 						  	width: 110,
 						  	fit: BoxFit.fill

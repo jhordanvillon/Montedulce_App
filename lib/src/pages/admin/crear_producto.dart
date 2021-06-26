@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:montedulce_integrador/src/api/categoria_api.dart';
+import 'package:montedulce_integrador/src/api/photo_api.dart';
 import 'package:montedulce_integrador/src/api/productos_api.dart';
+import 'package:montedulce_integrador/src/models/photo.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/dropdown_widget.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
+import 'package:montedulce_integrador/src/utils/extras.dart';
 import 'package:montedulce_integrador/src/widgets/input_widget.dart';
 
 class CrearProductoPage extends StatefulWidget {
@@ -54,10 +60,13 @@ class _Form extends StatefulWidget {
 
 class __FormState extends State<_Form> {
 
-   final nombreControl = TextEditingController();
-   final descripcionControl = TextEditingController();
-   final precioControl = TextEditingController();
-   String valor;
+  PickedFile file;
+
+
+  final nombreControl = TextEditingController();
+  final descripcionControl = TextEditingController();
+  final precioControl = TextEditingController();
+  String valor;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +77,7 @@ class __FormState extends State<_Form> {
             SizedBox(height: 15.0),
             Input(hinText: 'Descripción',icon: Icons.description_outlined,controller: descripcionControl),
             SizedBox(height: 15.0),
-            Input(hinText: 'Precio',icon: Icons.request_quote_outlined,controller: precioControl),
+            Input(hinText: 'Precio',icon: Icons.request_quote_outlined,controller: precioControl, tipoInput: TextInputType.number,),
             SizedBox(height: 15.0),
             FutureBuilder(
               future:  CategoriaApi.instance.ListarCategoria(),
@@ -78,8 +87,7 @@ class __FormState extends State<_Form> {
                     valor: valor, 
                     funcion: (seleccion) {
                       setState(() {
-                        valor = seleccion; 
-                        print("ID ->" + seleccion + " valor->" + valor);                
+                        valor = seleccion;           
                       });
                     },
                     categorias: snapshot.data,
@@ -89,12 +97,17 @@ class __FormState extends State<_Form> {
                 }
               }
             ),
-            Container(
-              width: 100,
+            (file == null) ? Container(
+              width: 150,
               height: 100,
-              child: Image(
-                fit: BoxFit.fitHeight,
-                image:AssetImage('assets/torta1.png')
+              child: Center(child: Text("Seleccione una imagen")),
+            ) : Container(
+              width: 150,
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image:  FileImage(File(file.path))
+                ),
               ),
             ),
             Container(
@@ -102,11 +115,16 @@ class __FormState extends State<_Form> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('Torta Chocolate.jpg',style: TextStyle(color:Color(0xff622420),fontSize: 22,fontWeight: FontWeight.w600),),
-                  SizedBox(width: 25,),
+                  Text('Seleccione una imagen',style: TextStyle(color:Color(0xff622420),fontSize: 22,fontWeight: FontWeight.w600),),
+                  SizedBox(width: 8,),
                   IconButton(
                     icon: Icon(Icons.add_photo_alternate,color: Color(0xff622420),size: 40,), 
-                    onPressed: (){}
+                    onPressed: () async {
+                      file = await Extras.pickImage(false);
+                      setState(() {
+                        
+                      });
+                    }
                   )
                 ],
               ),
@@ -118,24 +136,26 @@ class __FormState extends State<_Form> {
                 color: Color(0xffE8DB65),
                 child: Text( 'Guardar', style: TextStyle(color: Color(0XFF480E0A),fontSize: 18.0,fontWeight: FontWeight.bold),),
                 onPressed: ()async{
-                  final isok = await ProductoApi.instance.crearProducto(nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text),categoriaId: valor,stock: 1);
-                  print(isok);
-                  if(isok){
-                      Fluttertoast.showToast(
-                        msg: "creado correctamente",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.grey,  
-                         textColor: Colors.white
-                    );
+                  PhotoModel photoModel;
+                  if(file != null){
+                    final bytes = await file.readAsBytes();
+                    photoModel = await PhotoAPI.instance.uploadPhoto(bytes, file.path,context);
+                  }
+                  if(validarNumero(precioControl.text)){
+                    if(nombreControl.text.isNotEmpty && descripcionControl.text.isNotEmpty && valor != null && double.parse(precioControl.text) > 1){
+                      final isok = await ProductoApi.instance.crearProducto(nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text),categoriaId: valor,stock: 1, model: photoModel);
+                      print(isok);
+                      if(isok){
+                        Toast_msg("Producto creado correctamente");
+                        limpiarCampos();
+                      }else{
+                        Toast_msg("No se puedo crear el prodcuto");
+                      }
+                    }else{
+                      Toast_msg("Algun campo esta vacio o el precio es menor a uno");
+                    }
                   }else{
-                    Fluttertoast.showToast(
-                        msg: "Ingrese los campos correctamente",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.red,  
-                         textColor: Colors.grey  
-                    );
+                    Toast_msg("Formato no valido");
                   }
                 },
               ),
@@ -143,5 +163,31 @@ class __FormState extends State<_Form> {
           ],
         ),
     );
+  }
+
+  Future<bool> Toast_msg(String msg){
+    return Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,   
+      backgroundColor: Colors.grey,  
+      textColor: Colors.white  
+    );
+  }
+
+  void limpiarCampos(){
+    nombreControl.text = "";
+    descripcionControl.text = "";
+    precioControl.text = "";
+  }
+
+  bool validarNumero(String num){
+    try{
+      double.parse(num);
+      return true;
+    }catch(e){
+      print(e);
+      return false;
+    }
   }
 }

@@ -28,7 +28,7 @@ class AdminHome extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _cardOption(size: size,imgUrl: 'assets/usuarios.png',nombre: 'Usuarios',context: context,ruta: 'usuarios'),
-                    _cardOption(size: size,imgUrl: 'assets/pedidos.png',nombre: 'Pedidos',context: context,ruta: '')
+                    _cardOption(size: size,imgUrl: 'assets/pedidos.png',nombre: 'Pedidos',context: context,ruta: 'adminPedidos')
                   ],
                 ),
               ),

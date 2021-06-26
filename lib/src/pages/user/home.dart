@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/api/productos_api.dart';
 import 'package:montedulce_integrador/src/models/Producto.dart';
-import 'package:montedulce_integrador/src/models/Usuario.dart';
 import 'package:montedulce_integrador/src/pages/user/detail.dart';
 import 'package:montedulce_integrador/src/widgets/card_widget.dart';
 import 'package:montedulce_integrador/src/widgets/menu_widget.dart';
@@ -12,8 +11,7 @@ import 'cart.dart';
 
 class HomePage extends StatefulWidget {
 
-  UsuarioModel usuario;
-  HomePage({Key key, this.usuario}) : super(key: key);
+  HomePage({Key key, }) : super(key: key);
 	@override
 	_HomePageState createState() => _HomePageState();
 
@@ -43,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 						_verCarrito(),
 					],
 				),
-			drawer: SafeArea(child: MenuWidget(usuario: widget.usuario,)),
+			drawer: SafeArea(child: MenuWidget()),
 			body: Container(
 				padding: EdgeInsets.symmetric(horizontal: 10.0),
 				child: Theme(
@@ -53,7 +51,8 @@ class _HomePageState extends State<HomePage> {
 					child: Column(
 						children: [
 							_busqueda(),
-							_ordenarPor(),
+              SizedBox(height: 25.0,),
+							//_ordenarPor(),
 							FutureBuilder(
                 future:  ProductoApi.instance.ListarProducto(),
                 builder: (BuildContext context,AsyncSnapshot snapshot){
@@ -135,7 +134,7 @@ class _HomePageState extends State<HomePage> {
 						value: _opcion,
 						items: getItems(),
 						onChanged: (opt){
-              print(widget.usuario.adminNameRole);
+              
 							setState(() {
 								_opcion = opt;
 							});

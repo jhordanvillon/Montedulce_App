@@ -6,6 +6,7 @@ class Input extends StatefulWidget {
 
   final Function(String) validator;
   TextEditingController controller;
+  TextInputType tipoInput;
   String hinText, initialValue;
   IconData icon;
   bool fill,enabled;
@@ -19,6 +20,7 @@ class Input extends StatefulWidget {
     this.initialValue,
     this.enabled,
     this.validator,
+    this.tipoInput,
     @required this.icon
 
   }) : super(key: key);
@@ -32,6 +34,7 @@ class _InputState extends State<Input> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: widget.tipoInput,
       validator: widget.validator,
       enabled: widget.enabled,
       controller: widget.controller,

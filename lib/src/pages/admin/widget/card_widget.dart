@@ -43,7 +43,7 @@ class _CardWidgetState extends State<CardWidget> {
             width: 80,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: (widget.ruta != null) ? AssetImage(widget.ruta) : AssetImage('assets/contenido-no-disponible.jpg'),
+                  image: (widget.ruta != null) ? NetworkImage(widget.ruta) : AssetImage('assets/contenido-no-disponible.jpg'),
                   fit: BoxFit.cover
               ),
               borderRadius: BorderRadius.circular(15.0),

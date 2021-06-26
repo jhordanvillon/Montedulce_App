@@ -85,6 +85,7 @@ class _ProductoPageState extends State<ProductoPage> {
       itemCount: productos.length,
       itemBuilder: (context,index){
         final producto = productos[index];
+        print(producto.imgLink);
         return CardWidget(
           titulo: producto.nombre, 
           subtitulo: "Descripcion: "+producto.descripcion, 

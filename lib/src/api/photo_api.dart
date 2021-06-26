@@ -22,7 +22,7 @@ class PhotoAPI {
             filename: Extras.getFileName(filePath))
       });
       final Response response = await this._dio.post(
-          'https://api.cloudinary.com/v1_1/do9yplt9g/image/upload?upload_preset=jn2hycwx',
+          'https://api.cloudinary.com/v1_1/ddlg9esst/image/upload?upload_preset=bn94w0ky',
           data: formData,
           options: Options(headers: {'content-type': 'multipart/form-data'}));
       progressDialog.dismiss();

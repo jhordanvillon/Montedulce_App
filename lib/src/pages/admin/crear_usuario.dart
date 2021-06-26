@@ -82,23 +82,41 @@ class __FormState extends State<_Form> {
                 color: Color(0xffE8DB65),
                 child: Text( 'Guardar', style: TextStyle(color: Color(0XFF480E0A),fontSize: 18.0,fontWeight: FontWeight.bold),),
                 onPressed: () async {
-                  final user = await AuthenticationApi.instance.registrar(context: context, nombre: nombreControl.text, apellidos: apellidoControl.text, password: contrasenaControl.text, email: emailControl.text, username: usuarioControl.text, adminNameRole: rolControl.text);
-                  if(user != null){
-                    print("registrado") ;
-                    Fluttertoast.showToast(
-                        msg: "usuario registrado",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.red,  
-                         textColor: Colors.grey  
-                    );
+                  if(nombreControl.text.isNotEmpty && apellidoControl.text.isNotEmpty && emailControl.text.isNotEmpty && contrasenaControl.text.isNotEmpty && usuarioControl.text.isNotEmpty && rolControl.text.isNotEmpty){
+                    final user = await AuthenticationApi.instance.registrar(context: context, nombre: nombreControl.text, apellidos: apellidoControl.text, password: contrasenaControl.text, email: emailControl.text, username: usuarioControl.text, adminNameRole: rolControl.text);
+                    if(user != null){
+                      Toast_msg("Usuario registrado");
+                      limpiarCampos();
+                    }else{
+                      Toast_msg("El usuario no se pudo registrar");
+                    }
+                  }else{
+                    Toast_msg("Complete todos los campos");
                   }
-
                 },
               ),
             )
           ],
         ),
+    );
+  }
+
+  void limpiarCampos(){
+    nombreControl.text = "";
+    apellidoControl .text = "";
+    emailControl .text = "";
+    contrasenaControl .text = "";
+    usuarioControl  .text = "";
+    rolControl  .text = "";
+  }
+
+  Future<bool> Toast_msg(String msg){
+    return Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,   
+      backgroundColor: Colors.grey,  
+      textColor: Colors.white  
     );
   }
 }

@@ -40,12 +40,17 @@ class _CarritoItemCardState extends State<CarritoItemCard> {
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(image: (widget.producto.imgLink != null) ? AssetImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),),
+                height: 80,
+                 width: 80,
+                 decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: (widget.producto.imgLink != null) ? NetworkImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
+                    fit: BoxFit.cover
                 ),
+                borderRadius: BorderRadius.circular(15.0),
               ),
+            ),
+              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:montedulce_integrador/src/models/ItemBoleta.dart';
+import 'package:montedulce_integrador/src/models/pedido.dart';
 import 'package:montedulce_integrador/src/service/auth.dart';
 
 class PedidoApi{
@@ -23,14 +24,15 @@ class PedidoApi{
     List<Map<String,dynamic>> data = [];
     for (var i in item) {
       data.add({
-        "codigoPago": codigoPago ,
-        "tipoPedido": "Pendiente",
-        "items": item
+        "productoId": i.productoId,
+        "cantidad": i.cantidad
       });
     }
     try{
       final Response response = await this._dio.post("/",data: {
-        "Items":  data,
+        "codigoPago": codigoPago ,
+        "tipoPedido": tipoPedido,
+        "items":  data,
       },options: Options(headers: {"Authorization":tokenReal}));
       print(response.data);
       if(response.statusCode == 200){
@@ -41,5 +43,47 @@ class PedidoApi{
       return false;
     }
   }  
+
+  Future ListarPedido() async{
+    final token = await Auth.instance.accessToken;
+    final tokenReal = "Bearer " + token ;
+
+    try{
+      final Response response = await this._dio.get("/token",options: Options(headers: {"Authorization":tokenReal}));
+      print(response.data);
+      
+      if(response.statusCode == 200){
+        final List<dynamic> listaProducto = response.data;
+        return listaProducto.map(
+          (obj) => Pedido.fromJson(obj)
+        ).toList();
+      }
+      return false;
+    }catch(e){
+      print(e);
+      return [];
+    }
+}
+
+  Future PedidosAdmin() async{
+    final token = await Auth.instance.accessToken;
+    final tokenReal = "Bearer " + token ;
+
+    try{
+      final Response response = await this._dio.get("/",options: Options(headers: {"Authorization":tokenReal}));
+      print(response.data);
+      
+      if(response.statusCode == 200){
+        final List<dynamic> listaProducto = response.data;
+        return listaProducto.map(
+          (obj) => Pedido.fromJson(obj)
+        ).toList();
+      }
+      return false;
+    }catch(e){
+      print(e);
+      return [];
+    }
+}
 
 }
