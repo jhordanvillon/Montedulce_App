@@ -26,30 +26,42 @@ class _ProductoPageState extends State<ProductoPage> {
       ),
       backgroundColor: Color(0xFFFEFDE1),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TituloWidget(titulo: 'Productos'),
-                _busqueda(),
-                SizedBox(height: 15.0,),
-                Container(
-                  height: size.height * 0.75,
-                  child: FutureBuilder(
-                    future:  ProductoApi.instance.ListarProducto(),
-                    builder: (BuildContext context,AsyncSnapshot snapshot){
-                      if(snapshot.hasData){
-                        return _productos(snapshot.data);
-                      }else{
-                        return Center(child: CircularProgressIndicator(strokeWidth: 4,));
-                      }
-                    }
-                  ),
-                )
-              ],
+        child: Stack(
+          children: [
+            Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){Navigator.pushNamed(context, "adminHome");},color: Color(0XFF480E0A),),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+               ),
             ),
-          ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TituloWidget(titulo: '    Productos'),
+                    _busqueda(),
+                    SizedBox(height: 15.0,),
+                    Container(
+                      height: size.height * 0.75,
+                      child: FutureBuilder(
+                        future:  ProductoApi.instance.ListarProducto(),
+                        builder: (BuildContext context,AsyncSnapshot snapshot){
+                          if(snapshot.hasData){
+                            return _productos(snapshot.data);
+                          }else{
+                            return Center(child: CircularProgressIndicator(strokeWidth: 4,));
+                          }
+                        }
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -107,13 +119,8 @@ class _ProductoPageState extends State<ProductoPage> {
                         print(isok);
                         Navigator.of(context).pop();
                         if(isok){
-                           Fluttertoast.showToast(
-                        msg: "eliminado",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.red,  
-                         textColor: Colors.grey  
-                    );
+                          Toast_msg("Producto eliminado");
+                          Navigator.pushNamed(context, "productos");
                         }
                     },
                       child: Text("Si")
@@ -132,6 +139,16 @@ class _ProductoPageState extends State<ProductoPage> {
           );
       },
     ); 
+  }
+
+  Future<bool> Toast_msg(String msg){
+    return Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,   
+      backgroundColor: Colors.grey,  
+      textColor: Colors.white  
+    );
   }
 
 }

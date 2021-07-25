@@ -12,6 +12,7 @@ import 'package:montedulce_integrador/src/pages/admin/editar_producto.dart';
 import 'package:montedulce_integrador/src/pages/admin/estadisticas.dart';
 import 'package:montedulce_integrador/src/pages/admin/pedidos_admin.dart';
 import 'package:montedulce_integrador/src/pages/admin/productos.dart';
+import 'package:montedulce_integrador/src/pages/admin/reportes.dart';
 import 'package:montedulce_integrador/src/pages/admin/usuarios.dart';
 import 'package:montedulce_integrador/src/pages/login.dart';
 import 'package:montedulce_integrador/src/pages/register.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         'categorias':(BuildContext context)=>CategoriasPage(),
         'misPedidos': (BuildContext context) => MisPedidosPage(),
         'adminPedidos' : (BuildContext context) => AdminPedidosPage(),
+        'Reportes' : (BuildContext context) => ReportesPage(),
       },
       initialRoute: 'login',
     );

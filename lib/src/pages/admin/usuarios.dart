@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:montedulce_integrador/src/api/clientes_api.dart';
 import 'package:montedulce_integrador/src/models/clientes.dart';
-import 'package:montedulce_integrador/src/pages/admin/widget/card_widget.dart';
 import 'package:montedulce_integrador/src/pages/admin/widget/titulo_widget.dart';
 import 'package:montedulce_integrador/src/widgets/card_mis_pedidos.dart';
 class UsuariosPage extends StatefulWidget {

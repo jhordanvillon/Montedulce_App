@@ -135,27 +135,25 @@ class __FormState extends State<_Form> {
                   final isok = await ProductoApi.instance.editarProducto( nombre: nombreControl.text, descripcion: descripcionControl.text, precio: double.parse(precioControl.text),categoriaId: valor,stock: 1, id: id);
                   print(isok);
                   if(isok){
-                      Fluttertoast.showToast(
-                        msg: "Editado correctamente",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.red,  
-                         textColor: Colors.grey  
-                    );
+                    Toast_msg("Editado correctamente");
                   }else{
-                    Fluttertoast.showToast(
-                        msg: "Ingrese los campos correctamente",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,   
-                        backgroundColor: Colors.red,  
-                         textColor: Colors.grey  
-                    );
+                    Toast_msg("Ingrese los campos correctamente");
                   }
                 },
               ),
             )
           ],
         ),
+    );
+  }
+
+  Future<bool> Toast_msg(String msg){
+    return Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,   
+      backgroundColor: Colors.grey,  
+      textColor: Colors.white  
     );
   }
 }

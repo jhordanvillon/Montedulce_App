@@ -64,7 +64,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       Divider(color: colorMarron,),
                       SizedBox(height: 15.0,),
                       _opciones(titulo: 'Inicio', icon: Icons.home, press: () => Navigator.pushNamed(context, 'home')),
-                      _opciones(titulo: 'Perfil', icon: Icons.person,press: () => Navigator.pushNamed(context, 'perfil')),
+                      //_opciones(titulo: 'Perfil', icon: Icons.person,press: () => Navigator.pushNamed(context, 'perfil')),
                       _opciones(titulo: 'Mis pedidos', icon: Icons.shopping_cart, press: () => Navigator.pushNamed(context, 'misPedidos')),
                       _opciones(titulo: 'Salir', icon: Icons.logout,press: () => Navigator.pushNamed(context, 'login')),
                     ],

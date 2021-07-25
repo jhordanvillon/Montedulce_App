@@ -34,6 +34,10 @@ dependencies:
   fl_chart: ^0.36.1
   image_picker: ^0.7.5
   fluttertoast: ^8.0.7
+  pdf: ^3.4.2
+  share_extend: ^2.0.0
+  path_provider: ^2.0.2
+  flutter_full_pdf_viewer: ^1.0.6
   stripe_payment:
 dev_dependencies:
   flutter_test:

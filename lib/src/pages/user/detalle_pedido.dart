@@ -7,9 +7,11 @@ import 'package:montedulce_integrador/src/widgets/card_mis_pedidos.dart';
 class DetallePedidoPage extends StatefulWidget {
 
   final String boletaID;
+  final String usuarioId;
+  final String codigoPago;
   
 
-  DetallePedidoPage({Key key, this.boletaID  }) : super(key: key);
+  DetallePedidoPage({Key key, this.boletaID , this.usuarioId,this.codigoPago }) : super(key: key);
 
   @override
   _DetallePedidoPageState createState() => _DetallePedidoPageState();
@@ -17,7 +19,7 @@ class DetallePedidoPage extends StatefulWidget {
 
 class _DetallePedidoPageState extends State<DetallePedidoPage> {
 
-  final stiloLetra=TextStyle(color:Color(0XFF480E0A),fontSize: 20,);
+  final stiloLetra=TextStyle(color:Color(0XFF480E0A),fontSize: 5,);
   final stiloTitulto=TextStyle(color:Color(0XFF480E0A),fontSize: 30,);
 
   @override
@@ -41,6 +43,16 @@ class _DetallePedidoPageState extends State<DetallePedidoPage> {
                   ),
                   child: Column(
                     children: [
+                    Container(
+                      height: 20,
+                      margin: EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          Text("Codigo Pago: ", style: TextStyle(color: Color(0XFF480E0A)),),
+                          Text(((widget.codigoPago != null) ? widget.codigoPago.toString() : "Pedido no cancelado"), style: TextStyle(color: Colors.black),),
+                        ],
+                      )
+                    ), 
                     Container(
                       height: size.height*0.65,
                       margin: EdgeInsets.all(10.0),

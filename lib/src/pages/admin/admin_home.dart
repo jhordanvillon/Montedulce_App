@@ -37,7 +37,7 @@ class AdminHome extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    _cardOption(size: size,imgUrl: 'assets/estadisticas.png',nombre: 'Estadisticas',context: context,ruta: 'estadisticas'),
+                    _cardOption(size: size,imgUrl: 'assets/estadisticas.png',nombre: 'Reportes',context: context,ruta: 'Reportes'),
                   ],
                 ),
               ),

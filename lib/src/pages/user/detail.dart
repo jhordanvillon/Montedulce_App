@@ -63,7 +63,7 @@ class _DetailProductState extends State<DetailProduct> {
         width: size.width * 0.50,
         height: size.height * 0.25,
         child: Image(
-          image: (widget.producto.imgLink != null) ? AssetImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
+          image: (widget.producto.imgLink != null) ? NetworkImage(widget.producto.imgLink) : AssetImage('assets/contenido-no-disponible.jpg'),
         ),
       ),
     );

@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 					),
 					child: Column(
 						children: [
-							_busqueda(),
+							//_busqueda(),
               SizedBox(height: 25.0,),
 							//_ordenarPor(),
 							FutureBuilder(

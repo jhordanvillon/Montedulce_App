@@ -18,7 +18,7 @@ class _AdminPedidosPageState extends State<AdminPedidosPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.arrow_back),
         onPressed: (){
           Navigator.pushNamed(context, 'adminHome');
         },
@@ -64,7 +64,7 @@ class _AdminPedidosPageState extends State<AdminPedidosPage> {
           subtitulo2: (pedido.codigoPago == null) ? "Codigo de pago: ": "Codigo de pago: "+pedido.codigoPago.substring(0,5), 
           ruta: null,
           selected: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DetallePedidoPage(boletaID: pedido.boletaId,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DetallePedidoPage(boletaID: pedido.boletaId, usuarioId: pedido.usuarioId, codigoPago: pedido.codigoPago.toString(),)));
           }, 
           );
       },

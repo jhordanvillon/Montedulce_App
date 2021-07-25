@@ -153,7 +153,7 @@ class _CartPageState extends State<CartPage> {
                   print("pedido "+ pedido.toString() );
                   
                   if(pedido){
-                    Toast_msg("Producto realizado");
+                    Toast_msg("Pedido realizado");
                     Navigator.pushNamed(context, 'misPedidos');
                   }
                   
